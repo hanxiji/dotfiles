@@ -68,7 +68,9 @@ map("n","<leader>?",function() require("which-key").show({ global = false }) end
 -- 搜索
 --map("n", "<S-S>", ":FzfLua files<CR>", { noremap = true,silent = true,desc = "搜索文件" })
 map("n", "<leader>ff", ":FzfLua files<CR>", { noremap = true,silent = true,desc = "搜索文件" })
-map("n", "<leader>fg", ":FzfLua grep<CR>", { noremap = true,silent = true,desc = "grep搜索" })
+map("n", "<leader>fgg", ":FzfLua grep<CR>", { noremap = true,silent = true,desc = "grep搜索" })
+map("n", "<leader>fgb", ":FzfLua grep_curbuf<CR>", { noremap = true,silent = true,desc = "grep搜索当前buffer" })
+map("n", "<leader>fgp", ":FzfLua grep_project<CR>", { noremap = true,silent = true,desc = "grep搜索当前project" })
 map("n", "<leader>fb", ":FzfLua buffers<CR>", { noremap = true,silent = true,desc = "搜索buffer" })
 map("n", "<leader>fl", ":FzfLua blines<CR>", { noremap = true,silent = true,desc = "搜索当前buffer lines" })
 map("n", "<leader>fL", ":FzfLua lines<CR>", { noremap = true,silent = true,desc = "搜索所有打开buffer lines" })
@@ -149,8 +151,8 @@ pluginsKeys.mapLsp = function(bufnr)
     map("n", "gn", "<cmd>Lspsaga diagnostic_jump_next<CR>", tbl(opts,{ buffer = bufnr,desc = "Next diagnostic" }))
     map("n", "<leader>ll", "<cmd>Lspsaga show_cursor_diagnostics<CR>", tbl(opts,{ buffer = bufnr,silent = true,desc = "展示光标所在位置diagnostics" }))
     map("n", "<leader>lL", "<cmd>Lspsaga show_line_diagnostics<CR>", tbl(opts,{ buffer = bufnr,desc = "展示当前行diagnostics" }))
-    map("n", "<leader>lb", "<cmd>Lspsaga show_buf_diagnostics<CR>", tbl(opts,{ buffer = bufnr,desc = "展示当前Buffer diagnostics" }))
-    map("n", "<leader>lw", "<cmd>Lspsaga show_workspace_diagnostics<CR>", tbl(opts,{ buffer = bufnr,desc = "展示当前workspace diagnostics" }))
+    map("n", "<leader>ld", "<cmd>Lspsaga show_buf_diagnostics<CR>", tbl(opts,{ buffer = bufnr,desc = "展示当前Buffer diagnostics" }))
+    map("n", "<leader>lD", "<cmd>Lspsaga show_workspace_diagnostics<CR>", tbl(opts,{ buffer = bufnr,desc = "展示当前workspace diagnostics" }))
 
     -- 符号重命名
     map("n", "<leader>ln", "<cmd>Lspsaga rename<CR>", tbl(opts,{ buffer = bufnr,desc = "修改当前buffer变量、方法等符号的名称(Rename symbol)" }))

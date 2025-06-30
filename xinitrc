@@ -78,4 +78,9 @@ fcitx5 -d
 #feh --bg-fill --randomize ~/.wallpaper/* &
 
 #numlockx &
-exec dwm
+
+# 启动dwm
+#exec dwm
+exec startdwm
+# 启动i3-wm
+#exec i3
