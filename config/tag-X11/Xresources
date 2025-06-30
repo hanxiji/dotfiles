@@ -4,6 +4,8 @@ Xft.rgba: rgb
 Xft.hinting: true
 Xft.hintstyle: hintslight
 
+URxvt.letterSpace: -1
+
 URxvt*background:#2B2B2B
 !URxvt*background:black
 URxvt*foreground:#DEDEDE
@@ -43,8 +45,8 @@ URxvt*color14 : #34E2E2
 URxvt*color7  : #D3D7CF
 URxvt*color15 : #EEEEEC
 
-URxvt*font:xft:Source Code Pro:style=Regular:antialias=True:size=16,xft:Source Han Serif CN:style=Regular:size=16
-URxvt*boldfont:xft:Source Code Pro:style=Regular:antialias=True:size=16,xft:Source Han Serif CN:style=Regular:size=16
+URxvt*font:xft:WenQuanYi Zen Hei Mono:style=Regular:pixelsize=16,xft:WenQuanYi Zen Hei:style=Regular:antialias=True:pixelsize=16
+URxvt*boldfont:xft:WenQuanYi Zen Hei Mono:style=Regular:pixelsize=16,xft:WenQuanYi Zen Hei:style=Regular:antialias=True:pixelsize=16
 
 URxvt*depth: 32
 URxvt*borderLess: false

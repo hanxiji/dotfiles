@@ -48,27 +48,33 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
  unset f
 fi
 
-export LANG=zh_CN.UTF-8
-export LANGUAGE=zh_CN:en_US
-
-export GTK_IM_MODULE=fcitx
-export QT_IM_MODULE=fcitx
-export XMODIFIERS=@im=fcitx
-fcitx 1>/dev/null 2>&1 &
 #twm &
 #xclock -geometry 50x50-1+1 &
 #xterm -geometry 80x50+494+51 &
 #xterm -geometry 80x20+494-0 &
 #exec xterm -geometry 80x66+0+0 -name login
-picom -CGb &
+
+#export LANG=zh_CN.UTF-8
+#export LANGUAGE=zh_CN:en_US
+
+#xset s off
+#xset dpms 0 0 0
+
+export _JAVA_AWT_WM_NONREPARENTING=1
+#export AWT_TOOLKIT=MToolkit
+wmname LG3D
+
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
+export SDL_IM_MODULE=fcitx
+fcitx5 -d
+
+picom -CGb
+
 slstatus &
 
-#while
-#	habak -ms -hi ~/wallpaper/
-#do
-#	sleep 60
-#done &
-habak -ms -hi ~/wallpaper/
+feh --bg-fill --randomize ~/.wallpaper/* &
 
 #numlockx &
 exec dwm

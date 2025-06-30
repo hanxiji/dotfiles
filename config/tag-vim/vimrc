@@ -1,0 +1,113 @@
+"******************************vim基础配置文件******************************
+"********************文件类型检测开关设置********************
+filetype plugin indent on
+filetype on
+"********************设置编码********************
+set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
+set termencoding=utf-8
+set encoding=utf-8
+
+"********************通用设置********************
+"显示行号
+set number
+"突出显示当前行
+set cursorline
+"突出显示当前列
+"set cursorcolumn
+"总是显示状态栏
+set laststatus=2
+"set ruler
+"括号匹配
+set showmatch
+set showcmd
+"set paste "这个选项会造成括号自动补全插件失效
+"使用鼠标
+"set mouse=a
+"********************缩进设置********************
+"缩进符号
+"set foldmarker={,}
+"set foldmethod=indent
+"set foldlevel=100
+
+"********************编辑格式设置********************
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set expandtab
+set smarttab
+"set backspace=2
+"set backspace=indent,start,eol
+"set autoindent
+set smartindent
+"set cindent
+
+"********************plugs********************
+call plug#begin('~/.vim/plugged')
+
+"主题颜色相关
+"Plug 'joshdick/onedark.vim'
+Plug 'morhetz/gruvbox'
+Plug 'itchyny/lightline.vim'    "状态栏
+
+"编程通用
+Plug 'preservim/nerdtree',{ 'on': 'NERDTreeToggle' }    "树型目录
+"Plug 'Raimondi/delimitMate'
+Plug 'jiangmiao/auto-pairs' "括号自动补全
+Plug 'luochen1990/rainbow'
+
+"文件模糊搜索fzf，vim-fzf插件需先安装fzf程序
+Plug 'junegunn/fzf', { 'do': { -> fzf#install()  }  }   "该行会在vim插件安装目录中安装fzf程序，也可配置使用系统安装的fzf程序
+Plug 'junegunn/fzf.vim'
+
+"代码补全相关
+Plug 'neoclide/coc.nvim', {'branch': 'release'} "使用coc前需先安装nodejs
+
+"Debuger
+"Plug 'puremourning/vimspector'
+
+"GoLang
+"Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+
+"MarkDown
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install()  }, 'for': ['markdown', 'vim-plug'] }
+call plug#end()
+
+"lightline插件配置
+let g:lightline = {'colorscheme': 'wombat',}
+"delimitMate插件配置
+"let delimitMate_expand_cr = 1 "需要backspace包含start,eol
+"let delimitMate_expand_space = 1 "需要backspace包含start,eol
+"NERDTree插件配置
+"rainbow插件配置
+let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
+"fzf插件设置
+let g:fzf_preview_window = ['right:50%', 'ctrl-/']
+"********************plugs********************
+
+"********************颜色和主题********************
+"256色设置
+set t_Co=256
+"syntax enable
+syntax on
+set background=dark
+"colorscheme murphy
+colorscheme gruvbox
+"********************颜色和主题********************
+
+"********************自定义键盘映射********************
+"nnoremap <leader>n :NERDTreeFocus<CR>
+"nnoremap <F2> :NERDTree<CR>
+nnoremap <F3> :NERDTreeToggle<CR>
+"nnoremap <F4> :NERDTreeFind<CR>
+"nnoremap <F6> :NERDTreeMirror<CR>:NERDTreeFocus<CR>
+
+" Remap <C-f> and <C-b> for scroll float windows/popups.
+if has('nvim-0.4.0') || has('patch-8.2.0750')
+  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+endif
+"********************自定义键盘映射********************
