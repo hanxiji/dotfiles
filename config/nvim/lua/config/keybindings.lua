@@ -54,13 +54,32 @@ map("n", "<leader>8", ":BufferLineGoToBuffer 8<CR>", { noremap = true,silent = t
 map("n", "<leader>9", ":BufferLineGoToBuffer 9<CR>", { noremap = true,silent = true,desc = "Jump to Tab 9" })
 map("n", "<C-k>", ":BufferLineCyclePrev<CR>", tbl(opts,{ desc = "切换到前一个buffer" }))
 map("n", "<C-j>", ":BufferLineCycleNext<CR>", tbl(opts,{ desc = "切换到后一个buffer" }))
---map("n", "<leader>bd", ":bdelete | bnext<CR>", { noremap = true,silent = true,desc = "删除当前buffer，并自动切换到下一个buffer" })
---map("n", "<leader>bc", ":bdelete! | bnext<CR>", { noremap = true,silent = true,desc = "删除当前buffer不管是否保存，并自动切换到下一个buffer" })
-map("n", "<leader>bp", ":BufferLinePick<CR>", tbl(opts,{ desc = "选择一个buffer" }))
-map("n", "<leader>bP", ":BufferLinePickClose<CR>", tbl(opts,{ desc = "关闭选中的buffer" }))
-map("n", "<leader>bo", ":BufferLineCloseOthers<CR>", tbl(opts,{ desc = "关闭其他的buffer" }))
 map("n", "<C-h>", ":BufferLineMovePrev<CR>", tbl(opts,{ desc = "移动当前buffer到前面" }))
 map("n", "<C-l>", ":BufferLineMoveNext<CR>", tbl(opts,{ desc = "移动当前buffer到后面" }))
+map("n", "<leader>bp", "<cmd>BufferLinePick<CR>", tbl(opts,{ desc = "选择一个buffer" }))
+map("n", "<leader>bP", "<cmd>BufferLinePickClose<CR>", tbl(opts,{ desc = "关闭选中的buffer" }))
+map("n", "<leader>bo", "<cmd>BufferLineCloseOthers<CR>", tbl(opts,{ desc = "关闭其他buffer" }))
+map("n", "<leader>bl", "<cmd>BufferLineCloseLeft<CR>", tbl(opts,{ desc = "关闭左侧buffer" }))
+map("n", "<leader>br", "<cmd>BufferLineCloseRight<CR>", tbl(opts,{ desc = "关闭右侧buffer" }))
+
+map("n", "<leader>bc", function()
+    Snacks.bufdelete()
+end, tbl(opts,{ desc = "关闭当前buffer（bdelete，:ls!仍能够看到，保留窗口布局，如未保存会提示）" }))
+map('n', "<leader>bd", function()
+    Snacks.bufdelete({ wipe = true })
+end, tbl(opts,{ desc = "完全关闭当前buffer（bwipeout，:ls!无法看到，保留窗口布局，如未保存会提示）" }))
+map('n', "<leader>bO", function()
+    Snacks.bufdelete.other({ wipe = true })
+end, tbl(opts,{ desc = "完全关闭其他buffer（bwipeout）" }))
+--[[map("n", "<leader>bP", function()
+    local success, result = pcall(vim.cmd, "BufferLinePick")
+    if success then
+        --print("BufferLinePick执行成功：" .. result)
+        require("mini.bufremove").delete()
+    else
+        print("BufferLinePick执行失败：" .. result)
+    end
+end, tbl(opts,{ desc = "关闭选中的buffer" }))]]
 
 -- which-key
 map("n","<leader>?",function() require("which-key").show({ global = false }) end,{ noremap = true,silent = true,desc = "Buffer Local Keymaps (which-key)" })
@@ -74,8 +93,8 @@ map("n", "<leader>fgp", ":FzfLua grep_project<CR>", { noremap = true,silent = tr
 map("n", "<leader>fb", ":FzfLua buffers<CR>", { noremap = true,silent = true,desc = "搜索buffer" })
 map("n", "<leader>fl", ":FzfLua blines<CR>", { noremap = true,silent = true,desc = "搜索当前buffer lines" })
 map("n", "<leader>fL", ":FzfLua lines<CR>", { noremap = true,silent = true,desc = "搜索所有打开buffer lines" })
-map("n", "<leader>fc", ":FzfLua commands<CR>", { noremap = true,silent = true,desc = "搜索command" })
-map("n", "<leader>fC", ":FzfLua command_history<CR>", { noremap = true,silent = true,desc = "搜索command_history" })
+map("n", "<leader>fC", ":FzfLua commands<CR>", { noremap = true,silent = true,desc = "搜索command" })
+map("n", "<leader>fc", ":FzfLua command_history<CR>", { noremap = true,silent = true,desc = "搜索command_history" })
 map("n", "<leader>fnh", ":FzfLua helptags<CR>", { noremap = true,silent = true,desc = "搜索nvim helptags" })
 map("n", "<leader>fnk", ":FzfLua keymaps<CR>", { noremap = true,silent = true,desc = "搜索nvim keymaps" })
 map("n", "<leader>fno", ":FzfLua nvim_options<CR>", { noremap = true,silent = true,desc = "搜索nvim options" })
@@ -266,6 +285,12 @@ pluginsKeys.mapMiniBufremove = function()
     end, tbl(opts,{ desc = "不显示缓冲区" }))
 end
 
+pluginsKeys.mapOverseer = function()
+    map("n", "<leader>or", "<cmd>OverseerRun<cr>", tbl(opts,{ desc = "List overseer run templates" }))
+    map("n", "<leader>ot", "<cmd>OverseerToggle<cr>", tbl(opts,{ desc = "Toggle overseer task list" }))
+    map("n", "<leader>oT", "<cmd>OverseerClose<cr>", tbl(opts,{ desc = "Close overseer task list" }))
+end
+
 pluginsKeys.mapSnacks = function()
     map("n", "<leader>sn", function() Snacks.notifier.show_history() end, tbl(opts,{ desc = "显示notifier历史(q:退出)" }))
     map("n", "<leader>sN", function() Snacks.picker.notifications() end, tbl(opts,{ desc = "显示并搜索notifier历史(esc:退出)" }))
@@ -273,8 +298,8 @@ pluginsKeys.mapSnacks = function()
     map("n", "<leader>sh", function() Snacks.picker.help() end, tbl(opts,{ desc = "搜索nvim help文档" }))
     map("n", "<leader>sk", function() Snacks.picker.keymaps() end, tbl(opts,{ desc = "搜索nvim keymaps" }))
     map("n", "<leader>spc", function() Snacks.picker.colorschemes() end, tbl(opts,{ desc = "搜索nvim colorschemes" }))
-    map("n", "<leader>sc", function() Snacks.picker.command() end, tbl(opts,{ desc = "搜索nvim command" }))
-    map("n", "<leader>sC", function() Snacks.picker.command_history() end, tbl(opts,{ desc = "搜索nvim command_history" }))
+    map("n", "<leader>sC", function() Snacks.picker.command() end, tbl(opts,{ desc = "搜索nvim command" }))
+    map("n", "<leader>sc", function() Snacks.picker.command_history() end, tbl(opts,{ desc = "搜索nvim command_history" }))
 
     -- lsp
     map("n", "<leader>ss", function()

@@ -4,6 +4,10 @@ return {
 		lazy = true,
 	},
 	{
+		"MunifTanjim/nui.nvim",
+		lazy = true,
+	},
+	{
 		"nvim-tree/nvim-web-devicons",
     },
     {
@@ -101,49 +105,56 @@ return {
 			require("lualine").setup({})
 		end,
 	},
-	{
-		"akinsho/bufferline.nvim",
-		version = "*",
-		dependencies = {
-			"nvim-tree/nvim-web-devicons",
-		},
-		event = "VeryLazy",
-		config = function()
-			--vim.opt.termguicolors = true -- 已在options.lua中设置
-			require("bufferline").setup({
-				options = {
-					number = "ordinal",
-					-- 左侧让出nvim-tree插件位置
-					offsets = {
-						{
-							filetype = "NvimTree",
-							text = "File Explorer",
-							highlight = "Directory",
-							text_align = "left",
-							separator = true,
-						},
-                        -- 左侧让出neo-tree的位置
-						{
-							filetype = "neo-tree",
-							text = "File Explorer",
-							highlight = "Directory",
-							text_align = "left",
-							separator = true,
-						},
-					},
-				},
-			})
-		end,
-	},
-	{
+    {
+        "akinsho/bufferline.nvim",
+        version = "*",
+        dependencies = {
+            "nvim-tree/nvim-web-devicons",
+        },
+        event = "VeryLazy",
+        opts = {
+            options = {
+                -- 默认关闭命令不会保留窗口布局，使用Snacks.bufdelete或mini.bufremove插件替代
+                close_command = function(n) Snacks.bufdelete(n) end,
+                right_mouse_command = function(n) Snacks.bufdelete(n) end,
+                numbers = function(opts)
+                    return string.format('%s·%s', opts.raise(opts.id), opts.lower(opts.ordinal))
+                end,
+                offsets = {
+                    -- 左侧让出nvim-tree插件位置
+                    {
+                        filetype = "NvimTree",
+                        text = "File Explorer",
+                        highlight = "Directory",
+                        text_align = "left",
+                        separator = true,
+                    },
+                    -- 左侧让出neo-tree的位置
+                    {
+                        filetype = "neo-tree",
+                        text = "File Explorer",
+                        highlight = "Directory",
+                        text_align = "left",
+                        separator = true,
+                    },
+                },
+            },
+        },
+        config = function(_, opts)
+            --vim.opt.termguicolors = true -- 已在options.lua中设置
+            require("bufferline").setup(opts)
+        end,
+    },
+	--[[{
 		"echasnovski/mini.bufremove",
 		version = false,
 		config = function()
+            -- Snacks.bufdelete插件已有相同功能，该插件先不启用
             -- buffer关闭插件，封装了原生命令bdelete和bwipeout，可自动选择替代缓冲区保持窗口布局
             -- 使用原生命令删除当前buffer时会导致nvim-tree,neo-tree这些插件布局出现异常
 			require("config.keybindings").mapMiniBufremove()
 		end,
-	},
+	},]]
 	{
 		"folke/which-key.nvim",
 		event = "VeryLazy",
@@ -187,5 +198,17 @@ return {
         init = function ()
             require("config.keybindings").mapSnacks()
         end
-    }
+    },
+    --[[{
+        "folke/trouble.nvim",
+        opts = {}, -- for default options, refer to the configuration section for custom setup.
+        cmd = "Trouble",
+        config = function()
+            local trouble = require("trouble")
+            trouble.setup({
+                mode = "quickfix",   -- 默认模式
+                use_diagnostic_signs = true, -- 使用诊断符号
+            })
+        end
+    },]]
 }

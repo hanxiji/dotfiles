@@ -16,16 +16,25 @@ return {
 			"OverseerTaskAction",
 			"OverseerClearCache",
 		},
-        opts = {
-            dap = false,
-            task_list = {
-                bindings = {
-                    ["<C-h>"] = false,
-                    ["<C-j>"] = false,
-                    ["<C-k>"] = false,
-                    ["<C-l>"] = false,
+        init = function ()
+            require("config.keybindings").mapOverseer()
+        end,
+        config = function()
+            local overseer = require("overseer")
+            overseer.setup({
+                templates = { "builtin", "mytasks.python_uv_runner" },
+                dap = false,
+                task_list = {
+                    bindings = {
+                        ["<C-u>"] = false,
+                        ["<C-d>"] = false,
+                        ["<C-h>"] = false,
+                        ["<C-j>"] = false,
+                        ["<C-k>"] = false,
+                        ["<C-l>"] = false,
+                    },
                 },
-            },
-        },
+            })
+        end
 	},
 }
