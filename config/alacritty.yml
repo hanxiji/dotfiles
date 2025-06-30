@@ -1,0 +1,133 @@
+schemes:
+  snazzy: &snazzy
+    primary:
+      background: '0x282a36'
+      foreground: '0xeff0eb'
+    normal:
+      black:   '0x282a36'
+      red:     '0xff5c57'
+      green:   '0x5af78e'
+      yellow:  '0xf3f99d'
+      blue:    '0x57c7ff'
+      magenta: '0xff6ac1'
+      cyan:    '0x9aedfe'
+      white:   '0xf1f1f0'
+    bright:
+      black:   '0x686868'
+      red:     '0xff5c57'
+      green:   '0x5af78e'
+      yellow:  '0xf3f99d'
+      blue:    '0x57c7ff'
+      magenta: '0xff6ac1'
+      cyan:    '0x9aedfe'
+      white:   '0xf1f1f0'
+  gruvbox_dark: &gruvbox_dark
+    primary:
+      # hard contrast: background = '0x1d2021'
+      background: '0x282828'
+      # soft contrast: background = '0x32302f'
+      foreground: '0xebdbb2'
+    normal:
+      black:   '0x282828'
+      red:     '0xcc241d'
+      green:   '0x98971a'
+      yellow:  '0xd79921'
+      blue:    '0x458588'
+      magenta: '0xb16286'
+      cyan:    '0x689d6a'
+      white:   '0xa89984'
+    bright:
+      black:   '0x928374'
+      red:     '0xfb4934'
+      green:   '0xb8bb26'
+      yellow:  '0xfabd2f'
+      blue:    '0x83a598'
+      magenta: '0xd3869b'
+      cyan:    '0x8ec07c'
+      white:   '0xebdbb2'
+  challenger_deep: &challenger_deep
+    primary:
+      background: '0x1e1c31'
+      foreground: '0xcbe1e7'
+    cursor:
+      text: '0xff271d'
+      cursor: '0xfbfcfc'
+    normal:
+      black:   '0x141228'
+      red:     '0xff5458'
+      green:   '0x62d196'
+      yellow:  '0xffb378'
+      blue:    '0x65b2ff'
+      magenta: '0x906cff'
+      cyan:    '0x63f2f1'
+      white:   '0xa6b3cc'
+    bright:
+      black:   '0x565575'
+      red:     '0xff8080'
+      green:   '0x95ffa4'
+      yellow:  '0xffe9aa'
+      blue:    '0x91ddff'
+      magenta: '0xc991e1'
+      cyan:    '0xaaffe4'
+      white:   '0xcbe3e7'
+
+colors: *snazzy
+
+#实时重载配置文件
+live_config_reload: true
+
+#字体相关配置
+font:
+  normal:
+    #family: Hack Nerd Font Mono
+    #family: WenQuanYi Zen Hei Mono
+    family: Source Code Pro
+    style: Regular
+  bold:
+    #family: Hack Nerd Font Mono
+    #family: WenQuanYi Zen Hei Mono
+    family: Source Code Pro
+    style: Bold
+  italic:
+    #family: Hack Nerd Font Mono
+    #family: WenQuanYi Zen Hei Mono
+    family: Source Code Pro
+    style: Italic
+  bold_italic:
+    #family: Hack Nerd Font Mono
+    #family: WenQuanYi Zen Hei Mono
+    family: Source Code Pro
+    style: Bold Italic
+  size: 16.0
+
+window:
+  #dimensions:
+  # columns: 120
+  # lines: 30
+  position:
+    x: 0
+    y: 0
+  padding:
+    x: 10
+    y: 15
+  dynamic_padding: false
+    # 窗口修饰
+    # - full: 有边界+标题栏
+    # - none: 无边界+标题栏
+  decorations: none
+  dynamic_title: true
+  # Values for `startup_mode`:
+  #   - Windowed
+  #   - Maximized
+  #   - Fullscreen
+  startup_mode: Maximized
+
+scrolling:
+# 回滚缓冲区中的最大行数,指定“0”将禁用滚动。
+  history: 10000
+  # 滚动行数 
+  multiplier: 10
+  # 每次滚动行数（分屏时）
+  faux_multiplier: 100
+  # 自动滚动至最新行
+  auto_scroll: true
