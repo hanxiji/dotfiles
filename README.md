@@ -17,8 +17,16 @@ CPU-X
 
 fzf
 LazyGit
+
 ### PICOM
 透明组件
+
+### alacritty
+yml格式配置文件已不使用，新配置文件用alacritty.toml代替
+主题下载地址：
+[https://github.com/alacritty/alacritty-theme](https://github.com/alacritty/alacritty-theme)
+主题安装路径：
+`~/.config/alacritty/themes`
 
 ## Linux环境变量配置说明
 

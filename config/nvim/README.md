@@ -6,8 +6,12 @@ fzf
 lazygit
 ripgrep
 
-系统剪切板工具
+## 系统工具
 xclip
+
+# 插件说明
+## im-select.nvim
+windows需安装`im-select.exe`用于切换输入法
 
 # lang
 

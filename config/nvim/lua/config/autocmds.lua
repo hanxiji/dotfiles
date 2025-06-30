@@ -11,6 +11,7 @@ vim.api.nvim_create_autocmd('FileType', {
 })
 ]]
 
+--[[
 local fcitx5_remote_exists = vim.fn.executable("fcitx5-remote") == 1
 if fcitx5_remote_exists then
     -- print("fcitx5-remote 存在，可以使用。")
@@ -34,4 +35,4 @@ if fcitx5_remote_exists then
         end
     })
 end
-
+]]
