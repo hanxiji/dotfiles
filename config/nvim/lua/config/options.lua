@@ -17,6 +17,9 @@ vim.opt.softtabstop = 4 -- number of spacesin tab when editing
 vim.opt.shiftwidth = 4 -- insert 4 spaces on a tab
 vim.opt.expandtab = true -- tabs are spaces, mainly because of python
 
+vim.opt.smartindent = true
+vim.opt.cindent = true
+
 -- UI config
 vim.opt.number = true -- 显示行号 
 vim.opt.relativenumber = false -- 显示相对行号

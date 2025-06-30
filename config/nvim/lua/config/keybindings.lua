@@ -39,9 +39,8 @@ map("n", "<leader>wl", "<C-w>l", { noremap = true,silent = true,desc = "窗口�
 map("n", "<leader>e", ":NvimTreeToggle<CR>", { noremap = true,silent = true,desc = "打开nvim-tree" })
 map("n", "<leader>ee", ":NvimTreeFocus<CR>", { noremap = true,silent = true,desc = "光标聚焦至nvim-tree" })
 map("n", "<leader>ef", ":NvimTreeFindFile<CR>", { noremap = true,silent = true,desc = "展开路径至当前Buffer文件,光标聚焦到对应文件节点" })
-
 -- oil 文件浏览插件
-map("n", "<leader>o", ":Oil<CR>", { noremap = true,silent = true,desc = "打开Oil文件浏览插件" })
+map("n", "<leader>eo", ":Oil<CR>", { noremap = true,silent = true,desc = "打开Oil文件浏览插件" })
 
 -- bufferline
 map("n", "<leader>1", ":BufferLineGoToBuffer 1<CR>", { noremap = true,silent = true,desc = "Jump to Tab 1" })
@@ -69,6 +68,15 @@ map("n","<leader>?",function() require("which-key").show({ global = false }) end
 map("n", "<leader>ff", ":FzfLua files<CR>", { noremap = true,silent = true,desc = "搜索文件" })
 map("n", "<leader>fg", ":FzfLua grep<CR>", { noremap = true,silent = true,desc = "grep搜索" })
 map("n", "<leader>fb", ":FzfLua buffers<CR>", { noremap = true,silent = true,desc = "搜索buffer" })
+map("n", "<leader>fl", ":FzfLua blines<CR>", { noremap = true,silent = true,desc = "搜索当前buffer lines" })
+map("n", "<leader>fL", ":FzfLua lines<CR>", { noremap = true,silent = true,desc = "搜索所有打开buffer lines" })
+map("n", "<leader>fC", ":FzfLua command_history<CR>", { noremap = true,silent = true,desc = "搜索command_history" })
+map("n", "<leader>fnh", ":FzfLua helptags<CR>", { noremap = true,silent = true,desc = "搜索nvim helptags" })
+map("n", "<leader>fnk", ":FzfLua keymaps<CR>", { noremap = true,silent = true,desc = "搜索nvim keymaps" })
+map("n", "<leader>fno", ":FzfLua nvim_options<CR>", { noremap = true,silent = true,desc = "搜索nvim options" })
+map("n", "<leader>fs", ":FzfLua lsp_document_symbols<CR>", { noremap = true,silent = true,desc = "搜索lsp_document_symbols" })
+map("n", "<leader>fS", ":FzfLua lsp_workspace_symbols<CR>", { noremap = true,silent = true,desc = "搜索lsp_workspace_symbols" })
+--map("n", "<leader>fS", ":FzfLua lsp_live_workspace_symbols<CR>", { noremap = true,silent = true,desc = "搜索lsp_live_workspace_symbols" })
 map("n", "<leader>fr", ":GrugFar<CR>", { noremap = true,silent = true,desc = "查找文件内容替换(grug-far插件)" })
 
 -- formatter，使用conform.nvim自定义了一个Format方法
@@ -164,7 +172,7 @@ pluginsKeys.mapLsp = function(bufnr)
 
     map("n", "<leader>lt", "<cmd>Lspsaga term_toggle<CR>", tbl(opts,{ buffer = bufnr,desc = "弹出一个float terminal" }))
 
-    map("n", "<leader>ls", "<cmd>Lspsaga outline<CR>", tbl(opts,{ buffer = bufnr,desc = "显示当前buffer出现的类、方法等符号(document symbols,o:跳转)" }))
+    -- map("n", "<leader>ls", "<cmd>Lspsaga outline<CR>", tbl(opts,{ buffer = bufnr,desc = "显示当前buffer出现的类、方法等符号(document symbols,o:跳转)" }))
 
     map("n", "<leader>li", "<cmd>Lspsaga incoming_calls<CR>", tbl(opts,{ buffer = bufnr,desc = "显示该方法被其他方法调用的列表(e:打开文件)" }))
 
@@ -267,6 +275,26 @@ pluginsKeys.mapSnacks = function()
     map("n", "<leader>sn", function()
         Snacks.notifier.show_history()
     end, tbl(opts,{ desc = "显示notifier历史(q:退出)" }))
+    map("n", "<leader>sN", function()
+        Snacks.picker.notifications()
+    end, tbl(opts,{ desc = "显示并搜索notifier历史(esc:退出)" }))
+    map("n", "<leader>sg", function()
+        Snacks.lazygit()
+    end, tbl(opts,{ desc = "显示一个lazygit float窗口" }))
+    map("n", "<leader>sh", function()
+        Snacks.picker.help()
+    end, tbl(opts,{ desc = "搜索nvim help文档" }))
+    map("n", "<leader>sk", function()
+        Snacks.picker.keymaps()
+    end, tbl(opts,{ desc = "搜索nvim keymaps" }))
+
+    map("n", "<leader>ls", function()
+        Snacks.picker.lsp_symbols()
+    end, tbl(opts,{ desc = "显示当前buffer lsp_symbols(esc:退出)" }))
+    map("n", "<leader>lS", function()
+        Snacks.picker.lsp_workspace_symbols()
+    end, tbl(opts,{ desc = "显示当前workspace lsp_symbols(esc:退出)" }))
+
 end
 
 return pluginsKeys

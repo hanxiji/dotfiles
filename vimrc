@@ -167,8 +167,8 @@ let g:fzf_preview_window = ['right:50%', 'ctrl-/']
 set t_Co=256
 " 开启24bit的颜色，开启这个颜色会更漂亮一些，命令行模式似乎不支持
 "set termguicolors
-" 代码高亮
-syntax on
+" 代码高亮，这个设置有的系统的vim会报错
+" syntax on
 set background=dark
 "colorscheme murphy
 colorscheme gruvbox

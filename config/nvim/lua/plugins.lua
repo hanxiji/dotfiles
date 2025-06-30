@@ -171,9 +171,9 @@ return {
             indent = { enabled = true },
             input = { enabled = false },
             lazygit = {
-                enabled = false
+                enabled = true
             },
-            picker = { enabled = false },
+            picker = { enabled = true },
             notifier = {
                 enabled = true,
                 timeout = 5000,

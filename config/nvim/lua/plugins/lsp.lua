@@ -24,8 +24,14 @@ return {
                     --[[settings = {
                         pylsp = {
                             plugins = {
-                                ruff = {
-                                    enabled = true,  -- Enable the plugin
+                                rope_completion = {
+                                    enabled = false
+                                },
+                                jedi_completion = {
+                                    enabled = true,
+                                    eager = true,
+                                    include_class_objects = true,
+                                    include_function_objects = true
                                 }
                             }
                         }
