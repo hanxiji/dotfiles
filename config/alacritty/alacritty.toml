@@ -32,23 +32,23 @@ import = [
 [font]
 size = 18.0
 
-[font.bold]
+[font.normal]
 #family = "Noto Sans Mono"
 #family = "Noto Sans Mono CJK SC"
 family = "JetBrains Mono"
-style = "Bold"
+style = "Regular"
 
-[font.bold_italic]
+[font.bold]
 family = "JetBrains Mono"
-style = "Bold Italic"
+style = "Bold"
 
 [font.italic]
 family = "JetBrains Mono"
 style = "Italic"
 
-[font.normal]
+[font.bold_italic]
 family = "JetBrains Mono"
-style = "Regular"
+style = "Bold Italic"
 
 [scrolling]
 #auto_scroll = true

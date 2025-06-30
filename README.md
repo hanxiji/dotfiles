@@ -18,6 +18,8 @@ CPU-X
 fzf
 LazyGit
 
+tmux
+
 ### PICOM
 透明组件
 
@@ -27,6 +29,8 @@ yml格式配置文件已不使用，新配置文件用alacritty.toml代替
 [https://github.com/alacritty/alacritty-theme](https://github.com/alacritty/alacritty-theme)
 主题安装路径：
 `~/.config/alacritty/themes`
+
+### tmux
 
 ## Linux环境变量配置说明
 

@@ -1,5 +1,5 @@
 return {
-	{
+	--[[{
 		"stevearc/overseer.nvim",
 		cmd = {
 			"OverseerOpen",
@@ -17,5 +17,5 @@ return {
 			"OverseerClearCache",
 		},
 		opts = {},
-	},
+	},]]
 }
