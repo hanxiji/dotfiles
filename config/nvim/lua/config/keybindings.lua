@@ -36,9 +36,9 @@ map("n", "<leader>wh", "<C-w>h", { noremap = true,silent = true,desc = "窗口�
 map("n", "<leader>wl", "<C-w>l", { noremap = true,silent = true,desc = "窗口切换快捷键简化ctrl+w+l" })
 
 -- nvim-tree
-map("n", "<leader>e", ":NvimTreeToggle<CR>", { noremap = true,silent = true,desc = "打开nvim-tree" })
-map("n", "<leader>ee", ":NvimTreeFocus<CR>", { noremap = true,silent = true,desc = "光标聚焦至nvim-tree" })
-map("n", "<leader>ef", ":NvimTreeFindFile<CR>", { noremap = true,silent = true,desc = "展开路径至当前Buffer文件,光标聚焦到对应文件节点" })
+map("n", "<leader>ee", ":NvimTreeToggle<CR>", { noremap = true,silent = true,desc = "打开nvim-tree" })
+map("n", "<leader>ef", ":NvimTreeFocus<CR>", { noremap = true,silent = true,desc = "光标聚焦至nvim-tree" })
+map("n", "<leader>es", ":NvimTreeFindFile<CR>", { noremap = true,silent = true,desc = "展开路径至当前Buffer文件,光标聚焦到对应文件节点" })
 -- oil 文件浏览插件
 map("n", "<leader>eo", ":Oil<CR>", { noremap = true,silent = true,desc = "打开Oil文件浏览插件" })
 
@@ -52,13 +52,15 @@ map("n", "<leader>6", ":BufferLineGoToBuffer 6<CR>", { noremap = true,silent = t
 map("n", "<leader>7", ":BufferLineGoToBuffer 7<CR>", { noremap = true,silent = true,desc = "Jump to Tab 7" })
 map("n", "<leader>8", ":BufferLineGoToBuffer 8<CR>", { noremap = true,silent = true,desc = "Jump to Tab 8" })
 map("n", "<leader>9", ":BufferLineGoToBuffer 9<CR>", { noremap = true,silent = true,desc = "Jump to Tab 9" })
-map("n", "<C-h>", ":BufferLineCyclePrev<CR>", { noremap = true,silent = true,desc = "切换到前一个buffer" })
-map("n", "<C-l>", ":BufferLineCycleNext<CR>", { noremap = true,silent = true,desc = "切换到后一个buffer" })
+map("n", "<C-k>", ":BufferLineCyclePrev<CR>", tbl(opts,{ desc = "切换到前一个buffer" }))
+map("n", "<C-j>", ":BufferLineCycleNext<CR>", tbl(opts,{ desc = "切换到后一个buffer" }))
 --map("n", "<leader>bd", ":bdelete | bnext<CR>", { noremap = true,silent = true,desc = "删除当前buffer，并自动切换到下一个buffer" })
 --map("n", "<leader>bc", ":bdelete! | bnext<CR>", { noremap = true,silent = true,desc = "删除当前buffer不管是否保存，并自动切换到下一个buffer" })
-map("n", "<leader>bp", ":BufferLinePick<CR>", { noremap = true,silent = true,desc = "选择一个buffer" })
-map("n", "<leader>bpc", ":BufferLinePickClose<CR>", { noremap = true,silent = true,desc = "关闭选中的buffer" })
+map("n", "<leader>bp", ":BufferLinePick<CR>", tbl(opts,{ desc = "选择一个buffer" }))
+map("n", "<leader>bP", ":BufferLinePickClose<CR>", tbl(opts,{ desc = "关闭选中的buffer" }))
 map("n", "<leader>bo", ":BufferLineCloseOthers<CR>", tbl(opts,{ desc = "关闭其他的buffer" }))
+map("n", "<C-h>", ":BufferLineMovePrev<CR>", tbl(opts,{ desc = "移动当前buffer到前面" }))
+map("n", "<C-l>", ":BufferLineMoveNext<CR>", tbl(opts,{ desc = "移动当前buffer到后面" }))
 
 -- which-key
 map("n","<leader>?",function() require("which-key").show({ global = false }) end,{ noremap = true,silent = true,desc = "Buffer Local Keymaps (which-key)" })
@@ -143,11 +145,11 @@ pluginsKeys.mapLsp = function(bufnr)
     -- 代码动作面板
     map("n", "<C-CR>", "<cmd>Lspsaga code_action<CR>", tbl(opts,{ buffer = bufnr,desc = "打开code action" }))
 
-    -- 定义跳转预览
-    map("n", "gd", "<cmd>Lspsaga peek_definition<CR>", tbl(opts,{ buffer = bufnr,desc = "Preview definition" }))
-    map("n", "gdd", "<cmd>Lspsaga goto_definition<CR>", tbl(opts,{ buffer = bufnr,desc = "goto definition" }))
-    map("n", "gy", "<cmd>Lspsaga peek_type_definition<CR>", tbl(opts,{ buffer = bufnr,desc = "Preview type definition" }))
-    map("n", "gyy", "<cmd>Lspsaga goto_type_definition<CR>", tbl(opts,{ buffer = bufnr,desc = "goto type definition" }))
+    -- 定义跳转预览，这个在使用中有lsp未响应一直等待问题，先使用snacks插件替代
+    -- map("n", "gd", "<cmd>Lspsaga peek_definition<CR>", tbl(opts,{ buffer = bufnr,desc = "Preview definition" }))
+    -- map("n", "gdd", "<cmd>Lspsaga goto_definition<CR>", tbl(opts,{ buffer = bufnr,desc = "goto definition" }))
+    -- map("n", "gy", "<cmd>Lspsaga peek_type_definition<CR>", tbl(opts,{ buffer = bufnr,desc = "Preview type definition" }))
+    -- map("n", "gyy", "<cmd>Lspsaga goto_type_definition<CR>", tbl(opts,{ buffer = bufnr,desc = "goto type definition" }))
 
     -- 悬浮文档（带语法高亮）
     map("n", "<leader>lh", "<cmd>Lspsaga hover_doc<CR>", tbl(opts,{ buffer = bufnr,desc = "Enhanced hover" }))
@@ -172,7 +174,7 @@ pluginsKeys.mapLsp = function(bufnr)
 
     map("n", "<leader>lt", "<cmd>Lspsaga term_toggle<CR>", tbl(opts,{ buffer = bufnr,desc = "弹出一个float terminal" }))
 
-    -- map("n", "<leader>ls", "<cmd>Lspsaga outline<CR>", tbl(opts,{ buffer = bufnr,desc = "显示当前buffer出现的类、方法等符号(document symbols,o:跳转)" }))
+    map("n", "<leader>ls", "<cmd>Lspsaga outline<CR>", tbl(opts,{ buffer = bufnr,desc = "显示当前buffer出现的类、方法等符号(document symbols,o:跳转)" }))
 
     map("n", "<leader>li", "<cmd>Lspsaga incoming_calls<CR>", tbl(opts,{ buffer = bufnr,desc = "显示该方法被其他方法调用的列表(e:打开文件)" }))
 
@@ -288,12 +290,45 @@ pluginsKeys.mapSnacks = function()
         Snacks.picker.keymaps()
     end, tbl(opts,{ desc = "搜索nvim keymaps" }))
 
-    map("n", "<leader>ls", function()
-        Snacks.picker.lsp_symbols()
+    -- lsp
+    map("n", "<leader>ss", function()
+        Snacks.picker.lsp_symbols({
+            filter={
+                default = {
+                    "Class",
+                    "Constructor",
+                    "Enum",
+                    "Field",
+                    "Function",
+                    "Interface",
+                    "Method",
+                    "Module",
+                    "Namespace",
+                    "Package",
+                    "Property",
+                    "Struct",
+                    "Trait",
+                    "Variable",
+                    "Object",
+                }
+            },
+            markdown = true,
+            help = true,
+        })
     end, tbl(opts,{ desc = "显示当前buffer lsp_symbols(esc:退出)" }))
-    map("n", "<leader>lS", function()
+    map("n", "<leader>sS", function()
         Snacks.picker.lsp_workspace_symbols()
     end, tbl(opts,{ desc = "显示当前workspace lsp_symbols(esc:退出)" }))
+
+    map("n", "gd", function()
+        Snacks.picker.lsp_definitions({auto_confirm = false,})
+    end, tbl(opts,{ desc = "显示并跳转lsp_definitions(esc:退出)" }))
+    map("n", "gy", function()
+        Snacks.picker.lsp_type_definitions({auto_confirm = false,})
+    end, tbl(opts,{ desc = "显示并跳转lsp_type_definitions(esc:退出)" }))
+    map("n", "gD", function()
+        Snacks.picker.lsp_declarations({auto_confirm = false,})
+    end, tbl(opts,{ desc = "显示并跳转lsp_declarations(esc:退出)" }))
 
 end
 
