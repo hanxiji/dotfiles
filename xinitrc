@@ -62,13 +62,13 @@ fi
 
 export _JAVA_AWT_WM_NONREPARENTING=1
 #export AWT_TOOLKIT=MToolkit
-wmname LG3D
+#wmname LG3D
 
 export GTK_IM_MODULE=fcitx
 export QT_IM_MODULE=fcitx
 export XMODIFIERS=@im=fcitx
 export SDL_IM_MODULE=fcitx
-#exec fcitx5 -d
+#fcitx5 &
 fcitx5 -d
 
 #picom -CGb
@@ -80,7 +80,7 @@ fcitx5 -d
 #numlockx &
 
 # 启动dwm
-#exec dwm
-exec startdwm
+exec dwm
+#exec startdwm
 # 启动i3-wm
 #exec i3
