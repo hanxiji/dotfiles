@@ -81,22 +81,26 @@ font:
   normal:
     #family: Hack Nerd Font Mono
     #family: WenQuanYi Zen Hei Mono
-    family: Source Code Pro
+    #family: Source Code Pro
+    family: Noto Sans Mono CJK SC 
     style: Regular
   bold:
     #family: Hack Nerd Font Mono
     #family: WenQuanYi Zen Hei Mono
-    family: Source Code Pro
+    #family: Source Code Pro
+    family: Noto Sans Mono CJK SC 
     style: Bold
   italic:
     #family: Hack Nerd Font Mono
     #family: WenQuanYi Zen Hei Mono
-    family: Source Code Pro
+    #family: Source Code Pro
+    family: Noto Sans Mono CJK SC 
     style: Italic
   bold_italic:
     #family: Hack Nerd Font Mono
     #family: WenQuanYi Zen Hei Mono
-    family: Source Code Pro
+    #family: Source Code Pro
+    family: Noto Sans Mono CJK SC 
     style: Bold Italic
   size: 16.0
 

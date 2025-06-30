@@ -68,13 +68,14 @@ export GTK_IM_MODULE=fcitx
 export QT_IM_MODULE=fcitx
 export XMODIFIERS=@im=fcitx
 export SDL_IM_MODULE=fcitx
+#exec fcitx5 -d
 fcitx5 -d
 
-picom -CGb
+#picom -CGb
 
-slstatus &
+#slstatus &
 
-feh --bg-fill --randomize ~/.wallpaper/* &
+#feh --bg-fill --randomize ~/.wallpaper/* &
 
 #numlockx &
 exec dwm
