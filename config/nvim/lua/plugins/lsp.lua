@@ -39,6 +39,7 @@ return {
                 },
                 --ruff = true,
                 clangd = {},
+                tinymist = {},
             }
         },
         config = function(_,opts)

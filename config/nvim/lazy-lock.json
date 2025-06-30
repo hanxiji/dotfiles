@@ -33,6 +33,7 @@
   "render-markdown.nvim": { "branch": "main", "commit": "8debb17aab2fbbf3b341e46ac032d0a6f937d8c3" },
   "snacks.nvim": { "branch": "main", "commit": "bc0630e43be5699bb94dadc302c0d21615421d93" },
   "toggleterm.nvim": { "branch": "main", "commit": "50ea089fc548917cc3cc16b46a8211833b9e3c7c" },
+  "typst-preview.nvim": { "branch": "master", "commit": "dea4525d5420b7c32eebda7de15a6beb9d6574fa" },
   "which-key.nvim": { "branch": "main", "commit": "370ec46f710e058c9c1646273e6b225acf47cbed" },
   "whichpy.nvim": { "branch": "main", "commit": "4091361ed224e0e5ae92b2a5c412cb2ca7c26f65" }
 }
