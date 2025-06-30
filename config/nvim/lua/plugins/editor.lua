@@ -21,6 +21,11 @@ return {
         -- or if using mini.icons/mini.nvim
         -- dependencies = { "echasnovski/mini.icons" },
         opts = {
+            winopts = {
+                preview = {
+                    layout = "vertical",    -- horizontal|vertical|flex
+                },
+            },
             lsp = {
                 jump1 = false,  --结果只有一个时是否自动跳转
             }

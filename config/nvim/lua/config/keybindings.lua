@@ -90,8 +90,8 @@ map("n", "<leader>pD", ":FzfLua diagnostics_workspace<CR>", tbl(opts, { silent =
 map("n", "<leader>pgd", ":FzfLua lsp_definitions<CR>", tbl(opts, { desc = "lsp搜索当前符号 lsp_definitions" }))
 map("n", "<leader>pgy", ":FzfLua lsp_typedefs<CR>", tbl(opts, { desc = "lsp搜索当前符号 lsp_type_definitions" }))
 map("n", "<leader>pgD", ":FzfLua lsp_declarations<CR>", tbl(opts, { desc = "lsp搜索当前符号 lsp_declarations" }))
-map("n", "<leader>pi", ":FzfLua lsp_incoming_calls<CR>", tbl(opts, { desc = "lsp搜索 lsp_incoming_calls" }))
-map("n", "<leader>po", ":FzfLua lsp_outgoing_calls<CR>", tbl(opts, { desc = "lsp搜索 lsp_outgoing_calls" }))
+map("n", "<leader>pc", ":FzfLua lsp_incoming_calls<CR>", tbl(opts, { desc = "lsp搜索 lsp_incoming_calls" }))
+map("n", "<leader>pC", ":FzfLua lsp_outgoing_calls<CR>", tbl(opts, { desc = "lsp搜索 lsp_outgoing_calls" }))
 map("n", "<leader>pr", ":FzfLua lsp_references<CR>", tbl(opts, { desc = "lsp搜索 lsp_references" }))
 map("n", "<leader>pi", ":FzfLua lsp_implementations<CR>", tbl(opts, { desc = "lsp搜索 lsp_implementations" }))
 map("n", "<leader>pa", ":FzfLua lsp_code_actions<CR>", tbl(opts, { desc = "lsp搜索 lsp_code_actions" }))
@@ -131,9 +131,9 @@ pluginsKeys.mapLsp = function(bufnr)
     -- print("buffer:",bufnr)
     -- 代码动作面板
     map("n", "<C-CR>", "<cmd>Lspsaga code_action<CR>", tbl(opts,{ buffer = bufnr,desc = "打开code action" }))
-    map("n", "<leader>lc", "<cmd>Lspsaga code_action<CR>", tbl(opts,{ buffer = bufnr,desc = "打开code action" }))
+    map("n", "<leader>la", "<cmd>Lspsaga code_action<CR>", tbl(opts,{ buffer = bufnr,desc = "打开code action" }))
 
-    -- 定义跳转预览，这个在使用中有lsp未响应一直等待问题，先使用snacks插件替代
+    -- 定义跳转预览，这个在使用中有lsp未响应一直等待问题，先使用snacks或者fzf-lua插件替代
     -- map("n", "gd", "<cmd>Lspsaga peek_definition<CR>", tbl(opts,{ buffer = bufnr,desc = "Preview definition" }))
     -- map("n", "gdd", "<cmd>Lspsaga goto_definition<CR>", tbl(opts,{ buffer = bufnr,desc = "goto definition" }))
     -- map("n", "gy", "<cmd>Lspsaga peek_type_definition<CR>", tbl(opts,{ buffer = bufnr,desc = "Preview type definition" }))
@@ -145,7 +145,7 @@ pluginsKeys.mapLsp = function(bufnr)
     -- 诊断导航与展示
     map("n", "gp", "<cmd>Lspsaga diagnostic_jump_prev<CR>", tbl(opts,{ buffer = bufnr,desc = "Prev diagnostic" }))
     map("n", "gn", "<cmd>Lspsaga diagnostic_jump_next<CR>", tbl(opts,{ buffer = bufnr,desc = "Next diagnostic" }))
-    map("n", "<leader>ld", "<cmd>Lspsaga show_cursor_diagnostics<CR>", tbl(opts,{ buffer = bufnr,silent = true,desc = "展示光标所在位置diagnostics" }))
+    map("n", "<leader>lc", "<cmd>Lspsaga show_cursor_diagnostics<CR>", tbl(opts,{ buffer = bufnr,silent = true,desc = "展示光标所在位置diagnostics" }))
     map("n", "<leader>ll", "<cmd>Lspsaga show_line_diagnostics<CR>", tbl(opts,{ buffer = bufnr,desc = "展示当前行diagnostics" }))
     map("n", "<leader>lb", "<cmd>Lspsaga show_buf_diagnostics<CR>", tbl(opts,{ buffer = bufnr,desc = "展示当前Buffer diagnostics" }))
     map("n", "<leader>lw", "<cmd>Lspsaga show_workspace_diagnostics<CR>", tbl(opts,{ buffer = bufnr,desc = "展示当前workspace diagnostics" }))
