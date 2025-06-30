@@ -20,7 +20,11 @@ return {
         dependencies = { "nvim-tree/nvim-web-devicons" },
         -- or if using mini.icons/mini.nvim
         -- dependencies = { "echasnovski/mini.icons" },
-        opts = {}
+        opts = {
+            lsp = {
+                jump1 = false,  --结果只有一个时是否自动跳转
+            }
+        }
     },
     {
         -- 查找替换

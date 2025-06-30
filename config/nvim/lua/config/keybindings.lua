@@ -76,10 +76,25 @@ map("n", "<leader>fC", ":FzfLua command_history<CR>", { noremap = true,silent = 
 map("n", "<leader>fnh", ":FzfLua helptags<CR>", { noremap = true,silent = true,desc = "搜索nvim helptags" })
 map("n", "<leader>fnk", ":FzfLua keymaps<CR>", { noremap = true,silent = true,desc = "搜索nvim keymaps" })
 map("n", "<leader>fno", ":FzfLua nvim_options<CR>", { noremap = true,silent = true,desc = "搜索nvim options" })
-map("n", "<leader>fs", ":FzfLua lsp_document_symbols<CR>", { noremap = true,silent = true,desc = "搜索lsp_document_symbols" })
-map("n", "<leader>fS", ":FzfLua lsp_workspace_symbols<CR>", { noremap = true,silent = true,desc = "搜索lsp_workspace_symbols" })
+
+map("n", "<leader>fs", ":FzfLua lsp_document_symbols<CR>", { noremap = true,silent = true,desc = "lsp搜索当前buffer lsp_document_symbols" })
+map("n", "<leader>fS", ":FzfLua lsp_workspace_symbols<CR>", { noremap = true,silent = true,desc = "lsp搜索当前workspace lsp_workspace_symbols" })
 --map("n", "<leader>fS", ":FzfLua lsp_live_workspace_symbols<CR>", { noremap = true,silent = true,desc = "搜索lsp_live_workspace_symbols" })
-map("n", "<leader>fr", ":GrugFar<CR>", { noremap = true,silent = true,desc = "查找文件内容替换(grug-far插件)" })
+map("n", "<leader>fd", ":FzfLua lsp_document_diagnostics<CR>", tbl(opts, { silent = false,desc = "lsp搜索当前buffer lsp_document_diagnostics" }))
+map("n", "<leader>fD", ":FzfLua lsp_workspace_diagnostics<CR>", tbl(opts, { silent = false,desc = "lsp搜索当前workspace lsp_workspace_diagnostics" }))
+
+map("n", "<leader>pd", ":FzfLua lsp_definitions<CR>", tbl(opts, { desc = "lsp搜索当前符号 lsp_definitions" }))
+map("n", "<leader>py", ":FzfLua lsp_typedefs<CR>", tbl(opts, { desc = "lsp搜索当前 lsp_type_definitions" }))
+map("n", "<leader>pD", ":FzfLua lsp_declarations<CR>", tbl(opts, { desc = "lsp搜索 lsp_declarations" }))
+map("n", "<leader>pi", ":FzfLua lsp_incoming_calls<CR>", tbl(opts, { desc = "lsp搜索 lsp_incoming_calls" }))
+map("n", "<leader>po", ":FzfLua lsp_outgoing_calls<CR>", tbl(opts, { desc = "lsp搜索 lsp_declarations" }))
+map("n", "<leader>pr", ":FzfLua lsp_references<CR>", tbl(opts, { desc = "lsp搜索 lsp_references" }))
+map("n", "<leader>pi", ":FzfLua lsp_implementations<CR>", tbl(opts, { desc = "lsp搜索 lsp_implementations" }))
+map("n", "<leader>pc", ":FzfLua lsp_code_actions<CR>", tbl(opts, { desc = "lsp搜索 lsp_code_actions" }))
+
+map("n", "<leader>pa", ":FzfLua lsp_finder<CR>", tbl(opts, { desc = "lsp整合搜索当前符号ref,def,impl等信息" }))
+
+map("n", "<leader>fr", ":GrugFar<CR>", tbl(opts, { desc = "查找文件内容替换(grug-far插件)" }))
 
 -- formatter，使用conform.nvim自定义了一个Format方法
 map("n", "<leader>cf", ":Format<CR>", { noremap = true,silent = true,desc = "格式化整个文件" })
@@ -160,6 +175,7 @@ pluginsKeys.mapLsp = function(bufnr)
     map("n", "<leader>lc", "<cmd>Lspsaga show_cursor_diagnostics<CR>", tbl(opts,{ buffer = bufnr,silent = true,desc = "展示光标所在位置diagnostics" }))
     map("n", "<leader>ll", "<cmd>Lspsaga show_line_diagnostics<CR>", tbl(opts,{ buffer = bufnr,desc = "展示当前行diagnostics" }))
     map("n", "<leader>lb", "<cmd>Lspsaga show_buf_diagnostics<CR>", tbl(opts,{ buffer = bufnr,desc = "展示当前Buffer diagnostics" }))
+    map("n", "<leader>lw", "<cmd>Lspsaga show_workspace_diagnostics<CR>", tbl(opts,{ buffer = bufnr,desc = "展示当前workspace diagnostics" }))
 
     -- 符号重命名
     map("n", "<leader>lr", "<cmd>Lspsaga rename<CR>", tbl(opts,{ buffer = bufnr,desc = "修改当前buffer变量、方法等符号的名称(Rename symbol)" }))
@@ -319,6 +335,13 @@ pluginsKeys.mapSnacks = function()
     map("n", "<leader>sS", function()
         Snacks.picker.lsp_workspace_symbols()
     end, tbl(opts,{ desc = "显示当前workspace lsp_symbols(esc:退出)" }))
+
+    map("n", "<leader>sd", function()
+        Snacks.picker.diagnostics_buffer()
+    end, tbl(opts,{ silent = false, desc = "显示当前buffer lsp_diagnostics(esc:退出)" }))
+    map("n", "<leader>sD", function()
+        Snacks.picker.diagnostics()
+    end, tbl(opts,{ silent = false, desc = "显示当前workspace lsp_diagnostics(esc:退出)" }))
 
     map("n", "gd", function()
         Snacks.picker.lsp_definitions({auto_confirm = false,})
