@@ -1,5 +1,5 @@
 return {
-	--[[{
+	{
 		"stevearc/overseer.nvim",
 		cmd = {
 			"OverseerOpen",
@@ -16,6 +16,16 @@ return {
 			"OverseerTaskAction",
 			"OverseerClearCache",
 		},
-		opts = {},
-	},]]
+        opts = {
+            dap = false,
+            task_list = {
+                bindings = {
+                    ["<C-h>"] = false,
+                    ["<C-j>"] = false,
+                    ["<C-k>"] = false,
+                    ["<C-l>"] = false,
+                },
+            },
+        },
+	},
 }

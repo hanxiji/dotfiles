@@ -1,5 +1,5 @@
 return {
-	{
+	--[[{
 		"L3MON4D3/LuaSnip",
         lazy = true,
 		-- follow latest release.
@@ -15,15 +15,14 @@ return {
             },
 		},
 
-	},
+	},]]
 	{
 		"saghen/blink.cmp",
         event = "InsertEnter",
 		-- optional: provides snippets for the snippet source
 		dependencies = {
-            "L3MON4D3/LuaSnip",
-            --"rafamadriz/friendly-snippets",
-            --{"L3MON4D3/LuaSnip",version = "v2.*"}
+            --"L3MON4D3/LuaSnip",
+            "rafamadriz/friendly-snippets",
         },
 
 		-- use a release tag to download pre-built binaries
@@ -36,7 +35,7 @@ return {
 		---@module 'blink.cmp'
 		---@type blink.cmp.Config
 		opts = {
-            snippets = { preset = "luasnip" },-- default | luasnip
+            snippets = { preset = "default" },-- default | luasnip
 			-- 'default' (recommended) for mappings similar to built-in completions (C-y to accept)
 			-- 'super-tab' for mappings similar to vscode (tab to accept)
 			-- 'enter' for enter to accept
