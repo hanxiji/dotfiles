@@ -5,10 +5,16 @@ local M = {
         priority = 1000, -- make sure to load this before all the other start plugins
         config = function()
             -- load the colorscheme here
-            vim.o.background = "dark" -- "dark" or "light"
-            vim.cmd([[colorscheme gruvbox]])
+            -- vim.o.background = "dark" -- "dark" or "light"
+            -- vim.cmd([[colorscheme gruvbox]])
         end,
         opts = ...
+    },
+    {
+        "folke/tokyonight.nvim",
+        lazy = false,
+        priority = 1000,
+        opts = {},
     }
 }
 
