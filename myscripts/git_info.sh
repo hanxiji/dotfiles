@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # MYSCRIPT 颜色定义
 MYSCRIPT_COLOR_RESET="\033[0m"
@@ -126,4 +126,12 @@ myscript_set_git_prompt() {
 #alias isgit='myscript_check_git_repo'
 
 # 自定义PS1，添加Git信息
-export PS1="\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$(myscript_set_git_prompt)\$ " 
+#export PS1="\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$(myscript_set_git_prompt)\$ " 
+#export PS1="\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$(myscript_set_git_prompt)\n\$ " 
+# 换行且带unicode连接符
+# └─▶
+# └─•
+# ╰─•
+# └─┤
+# ╰─╼
+export PS1="\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$(myscript_set_git_prompt)\n╰─•\$ " 
