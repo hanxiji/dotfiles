@@ -134,4 +134,4 @@ myscript_set_git_prompt() {
 # ╰─•
 # └─┤
 # ╰─╼
-export PS1="\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$(myscript_set_git_prompt)\n╰─•\$ " 
+export PS1="\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$(myscript_set_git_prompt)\n╰─╼\$ " 

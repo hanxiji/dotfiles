@@ -17,16 +17,19 @@ myscript_proxy_load_config() {
 
     local section="$1"
     # 使用awk解析配置文件
-    MYSCRIPT_PROXY_HOST=$(awk -F'=' -v sec="$section" '$0 ~ "\\[" sec "\\]" {f=1} f && $1 ~ /HOST/ {gsub("\"","",$2); print $2; exit}' "$MYSCRIPT_PROXY_CONFIG_FILE")
-    MYSCRIPT_PROXY_PORT=$(awk -F'=' -v sec="$section" '$0 ~ "\\[" sec "\\]" {f=1} f && $1 ~ /PORT/ {gsub("\"","",$2); print $2; exit}' "$MYSCRIPT_PROXY_CONFIG_FILE")
-    MYSCRIPT_PROXY_USERNAME=$(awk -F'=' -v sec="$section" '$0 ~ "\\[" sec "\\]" {f=1} f && $1 ~ /USERNAME/ {gsub("\"","",$2); print $2; exit}' "$MYSCRIPT_PROXY_CONFIG_FILE")
-    MYSCRIPT_PROXY_PASSWORD=$(awk -F'=' -v sec="$section" '$0 ~ "\\[" sec "\\]" {f=1} f && $1 ~ /PASSWORD/ {gsub("\"","",$2); print $2; exit}' "$MYSCRIPT_PROXY_CONFIG_FILE")
+    local MYSCRIPT_PROXY_PROTOCOL=$(awk -F'=' -v sec="$section" '! /^#/ && $0 ~ "\\[" sec "\\]" {f=1} f && ! /^#/ && $1 ~ /PROTOCOL/ {gsub("\"","",$2); print $2; exit}' "$MYSCRIPT_PROXY_CONFIG_FILE")
+    local MYSCRIPT_PROXY_HOST=$(awk -F'=' -v sec="$section" '! /^#/ && $0 ~ "\\[" sec "\\]" {f=1} f && ! /^#/ && $1 ~ /HOST/ {gsub("\"","",$2); print $2; exit}' "$MYSCRIPT_PROXY_CONFIG_FILE")
+    local MYSCRIPT_PROXY_PORT=$(awk -F'=' -v sec="$section" '! /^#/ && $0 ~ "\\[" sec "\\]" {f=1} f && ! /^#/ && $1 ~ /PORT/ {gsub("\"","",$2); print $2; exit}' "$MYSCRIPT_PROXY_CONFIG_FILE")
+    local MYSCRIPT_PROXY_USERNAME=$(awk -F'=' -v sec="$section" '! /^#/ && $0 ~ "\\[" sec "\\]" {f=1} f && ! /^#/ && $1 ~ /USERNAME/ {gsub("\"","",$2); print $2; exit}' "$MYSCRIPT_PROXY_CONFIG_FILE")
+    local MYSCRIPT_PROXY_PASSWORD=$(awk -F'=' -v sec="$section" '! /^#/ && $0 ~ "\\[" sec "\\]" {f=1} f && ! /^#/ && $1 ~ /PASSWORD/ {gsub("\"","",$2); print $2; exit}' "$MYSCRIPT_PROXY_CONFIG_FILE")
     
     # 生成代理URL（含认证）
     if [[ -n "$MYSCRIPT_PROXY_USERNAME" && -n "$MYSCRIPT_PROXY_PASSWORD" ]]; then
-        echo "${section,,}://${MYSCRIPT_PROXY_USERNAME}:${MYSCRIPT_PROXY_PASSWORD}@${MYSCRIPT_PROXY_HOST}:${MYSCRIPT_PROXY_PORT}"
+        #echo "${section,,}://${MYSCRIPT_PROXY_USERNAME}:${MYSCRIPT_PROXY_PASSWORD}@${MYSCRIPT_PROXY_HOST}:${MYSCRIPT_PROXY_PORT}"
+        echo "${MYSCRIPT_PROXY_PROTOCOL,,}://${MYSCRIPT_PROXY_USERNAME}:${MYSCRIPT_PROXY_PASSWORD}@${MYSCRIPT_PROXY_HOST}:${MYSCRIPT_PROXY_PORT}"
     else
-        echo "${section,,}://${MYSCRIPT_PROXY_HOST}:${MYSCRIPT_PROXY_PORT}"
+        #echo "${section,,}://${MYSCRIPT_PROXY_HOST}:${MYSCRIPT_PROXY_PORT}"
+        echo "${MYSCRIPT_PROXY_PROTOCOL,,}://${MYSCRIPT_PROXY_HOST}:${MYSCRIPT_PROXY_PORT}"
     fi
 }
 
@@ -113,18 +116,21 @@ fi
 
     cat > "$MYSCRIPT_PROXY_CONFIG_FILE" <<EOF
 [SOCKS5]
+PROTOCOL="socks5"
 HOST="127.0.0.1"
 PORT="1080"
 USERNAME=""
 PASSWORD=""
 
 [HTTP]
+PROTOCOL="http"
 HOST="127.0.0.1"
 PORT="8080"
 USERNAME=""
 PASSWORD=""
 
 [HTTPS]
+PROTOCOL="https"
 HOST="127.0.0.1"
 PORT="8443"
 USERNAME=""
