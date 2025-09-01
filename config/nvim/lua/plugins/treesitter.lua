@@ -6,7 +6,7 @@ return {
             require("nvim-treesitter.configs").setup({
                 -- 默认安装language parser
                 ensure_installed = {
-                    "lua",
+                    "lua","json","toml","yaml"
                 },
                 sync_install = true,
                 -- 语法高亮

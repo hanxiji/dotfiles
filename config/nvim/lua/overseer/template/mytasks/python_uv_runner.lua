@@ -18,9 +18,14 @@ return {
             cwd = vim.fn.expand("%:p:h"),
             -- the list of components or component aliases to add to the task
             components = {
-                {"on_output_quickfix", open = true, set_diagnostics = true},
+                {"on_output_quickfix", open = true, set_diagnostics = true, tail = true},
+                "default",
                 "on_exit_set_status",
                 {"display_duration", detail_level = 2}
+            },
+            -- 确保任务以非阻塞方式启动
+            strategy = {
+                "terminal", -- 或 "jobstart"
             },
         }
     end,

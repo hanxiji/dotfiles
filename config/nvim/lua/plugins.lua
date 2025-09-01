@@ -90,6 +90,9 @@ return {
 			win_options = {
 				signcolumn = "yes",
 			},
+            view_options = {
+                show_hidden = true,
+            },
 		},
 		config = function(_, opts)
 			local oil = require("oil")
@@ -119,6 +122,14 @@ return {
                 right_mouse_command = function(n) Snacks.bufdelete(n) end,
                 numbers = function(opts)
                     return string.format('%s·%s', opts.raise(opts.id), opts.lower(opts.ordinal))
+                end,
+                diagnostics = "nvim_lsp",    -- 选项false | "nvim_lsp" | "coc"
+                custom_filter = function(buf_number)
+                    -- filter out filetypes you don't want to see
+                    -- 排除 Quickfix List缓冲区
+                    if vim.bo[buf_number].filetype ~= "qf" then
+                        return true
+                    end
                 end,
                 offsets = {
                     -- 左侧让出nvim-tree插件位置

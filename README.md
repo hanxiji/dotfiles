@@ -20,6 +20,8 @@ LazyGit
 
 tmux
 
+remmina
+
 ### PICOM
 透明组件
 
