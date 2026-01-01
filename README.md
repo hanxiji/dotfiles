@@ -21,6 +21,7 @@ LazyGit
 tmux
 
 remmina
+freerdp
 
 ### PICOM
 透明组件

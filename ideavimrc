@@ -1,0 +1,28 @@
+Plug 'preservim/nerdtree'
+
+" 关闭音效
+set visualbell
+
+set which-key
+set notimeout
+" 可选：显示 Vim 默认动作
+let g:WhichKey_ShowVimActions = "true"
+
+let mapleader = " "
+
+"nnoremap <Leader>gu :action GotoSuperMethod<CR> " 跳转到父类的方法或接口的定义
+
+" 页签（标签）切换
+map <silent> <C-h> <Action>(PreviousTab) " 切换到上一个标签页
+map <silent> <C-l> <Action>(NextTab)     " 切换到下一个标签页
+
+"map <leader>r <Action>(RenameFile) " 重命名文件
+" 重命名变量、方法、类等元素
+map <leader>r <Action>(RenameElement)
+
+map <leader>fs <Action>(FileStructurePopup) " 快速打开文件结构
+
+map <Leader>gi <Action>(GotoImplementation) " 跳转至接口或者方法实现处
+map <Leader>gu <Action>(GotoSuperMethod) " 跳转到父类的方法或接口的定义
+
+
