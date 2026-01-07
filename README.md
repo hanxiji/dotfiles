@@ -27,6 +27,7 @@ freerdp
 透明组件
 
 ### alacritty
+
 yml格式配置文件已不使用，新配置文件用alacritty.toml代替
 主题下载地址：
 [https://github.com/alacritty/alacritty-theme](https://github.com/alacritty/alacritty-theme)
@@ -34,6 +35,10 @@ yml格式配置文件已不使用，新配置文件用alacritty.toml代替
 `~/.config/alacritty/themes`
 
 ### tmux
+
+配置文件：
+>. `tmux.conf`：主配置文件，安装位置: `$HOME/.tmux.conf`
+>. `tmux-3.6.conf`：3.6版本新增配置，安装位置: `$HOME/.tmux-3.6.conf`
 
 ## Linux环境变量配置说明
 
