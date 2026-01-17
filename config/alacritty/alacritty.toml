@@ -35,19 +35,23 @@ size = 18.0
 [font.normal]
 #family = "Noto Sans Mono"
 #family = "Noto Sans Mono CJK SC"
-family = "JetBrains Mono"
+#family = "JetBrains Mono"
+family = "Maple Mono NF CN"
 style = "Regular"
 
 [font.bold]
-family = "JetBrains Mono"
+#family = "JetBrains Mono"
+family = "Maple Mono NF CN"
 style = "Bold"
 
 [font.italic]
-family = "JetBrains Mono"
+#family = "JetBrains Mono"
+family = "Maple Mono NF CN"
 style = "Italic"
 
 [font.bold_italic]
-family = "JetBrains Mono"
+#family = "JetBrains Mono"
+family = "Maple Mono NF CN"
 style = "Bold Italic"
 
 [scrolling]
