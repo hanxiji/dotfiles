@@ -82,13 +82,13 @@ return {
 		opts = {
 			columns = {
 				"icon",
-				-- "type",
+				--"type",
 				-- "permissions",
-				-- "size",
-				{ "mtime", format = "%y-%m-%d %H:%M" },
+				"size",
+				{ "mtime", format = "%y/%m/%d %H:%M" },
 			},
 			win_options = {
-				signcolumn = "yes",
+				signcolumn = "yes:2",
 			},
             view_options = {
                 show_hidden = true,
@@ -99,6 +99,26 @@ return {
 			oil.setup(opts)
 		end,
 	},
+    {
+        --oil第三方插件，在文件名旁展示git标记
+        "benomahony/oil-git.nvim",
+        dependencies = { "stevearc/oil.nvim" },
+        -- No opts or config needed! Works automatically
+    },
+    --[[{
+        --oil第三方插件，在signcolumn展示git标记
+        "refractalize/oil-git-status.nvim",
+        dependencies = {
+            "stevearc/oil.nvim",
+        },
+        config = true,
+    },]]
+    {
+        --oil第三方插件，在文件名旁显示lsp诊断标记
+        "JezerM/oil-lsp-diagnostics.nvim",
+        dependencies = { "stevearc/oil.nvim" },
+        opts = {}
+    },
 	{
 		"nvim-lualine/lualine.nvim",
 		dependencies = {
@@ -195,7 +215,10 @@ return {
             lazygit = {
                 enabled = true
             },
-            picker = { enabled = true },
+            picker = { 
+                enabled = true,
+                ui_select = true,
+            },
             notifier = {
                 enabled = true,
                 timeout = 5000,
