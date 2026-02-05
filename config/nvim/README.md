@@ -2,8 +2,8 @@
 
 ## 额外安装软件
 tree-sitter和tree-sitter-cli
-fzf
 lazygit
+fzf
 ripgrep
 
 ## 系统工具
@@ -17,12 +17,24 @@ windows需安装`im-select.exe`用于切换输入法
 
 ## golang
 
+gopls
+
 ## python
+
 python-lsp-server
 ruff
+pyright
 
 ## c
 
+clangd
+
 ## lua
 
+lua_ls
+
 ## markdown
+
+## typst
+
+tinymist
