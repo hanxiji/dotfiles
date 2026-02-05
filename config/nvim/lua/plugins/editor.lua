@@ -28,6 +28,9 @@ return {
             },
             lsp = {
                 jump1 = false,  --结果只有一个时是否自动跳转
+                code_actions = {
+                    silent = true,  -- code_actions不再提示消息
+                }
             }
         }
     },
