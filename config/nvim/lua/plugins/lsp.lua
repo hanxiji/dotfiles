@@ -39,6 +39,7 @@ return {
                 },
                 --ruff = true,
                 pyright = {},
+                basedpyright = {},
                 clangd = {},
                 tinymist = {
                     on_attach = function(client, bufnr)

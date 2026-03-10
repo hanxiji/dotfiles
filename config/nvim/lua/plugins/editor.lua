@@ -87,30 +87,30 @@ return {
             },
         },
     },
-    {
-        "akinsho/toggleterm.nvim",
-        version = "*",
-        opts={
-            on_open = function(term)
-                --print("打开一个终端：",term.bufnr)
-                -- 终端打开时执行的函数（如绑定快捷键）
-                local opts = { buffer = term.bufnr }
-                vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)  -- Esc 退出终端模式
-                vim.keymap.set('t', '<esc><esc>', [[<C-\><C-n><C-W>c]], { noremap = true,silent = true,desc = "关闭当前term窗口" })  -- Esc 退出终端模式
-            end,
-        },
-        config = function (_,opts)
-            require("toggleterm").setup(opts)
-            require("config.keybindings").mapTerm()
-        end
-    },
-    {
-        "keaising/im-select.nvim",
-        config = function()
-            require("im_select").setup({
-                -- 默认事件 "VimEnter", "FocusGained", "InsertLeave", "CmdlineLeave"
-                set_default_events = { "VimEnter", "InsertLeave", },
-            })
-        end,
-    }
+    --{
+    --    "akinsho/toggleterm.nvim",
+    --    version = "*",
+    --    opts={
+    --        on_open = function(term)
+    --            --print("打开一个终端：",term.bufnr)
+    --            -- 终端打开时执行的函数（如绑定快捷键）
+    --            local opts = { buffer = term.bufnr }
+    --            vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)  -- Esc 退出终端模式
+    --            vim.keymap.set('t', '<esc><esc>', [[<C-\><C-n><C-W>c]], { noremap = true,silent = true,desc = "关闭当前term窗口" })  -- Esc 退出终端模式
+    --        end,
+    --    },
+    --    config = function (_,opts)
+    --        require("toggleterm").setup(opts)
+    --        require("config.keybindings").mapTerm()
+    --    end
+    --},
+    --{
+    --    "keaising/im-select.nvim",
+    --    config = function()
+    --        require("im_select").setup({
+    --            -- 默认事件 "VimEnter", "FocusGained", "InsertLeave", "CmdlineLeave"
+    --            set_default_events = { "VimEnter", "InsertLeave", },
+    --        })
+    --    end,
+    --}
 }

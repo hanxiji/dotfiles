@@ -237,36 +237,36 @@ pluginsKeys.mapDap = function()
 
 end
 
-pluginsKeys.mapTerm = function()
-    -- 切换普通终端
-    map("n", "<leader>tt", "<cmd>ToggleTerm<cr>", tbl(opts, { desc = "切换终端" }))
-    -- 切换水平分割终端
-    map("n", "<leader>th", "<cmd>ToggleTerm direction=horizontal<cr>", tbl(opts, { desc = "切换水平分割终端" }))
-    -- 切换垂直分割终端
-    map("n", "<leader>tv", "<cmd>ToggleTerm direction=vertical<cr>", tbl(opts, { desc = "切换垂直分割终端" }))
-    -- 切换浮动终端
-    map("n", "<leader>tf", "<cmd>ToggleTerm direction=float<cr>", tbl(opts, { desc = "切换浮动终端" }))
-    -- 切换所有终端
-    map("n", "<leader>ta", "<cmd>ToggleTermToggleAll<cr>", tbl(opts, { desc = "切换所有终端" }))
-    -- 选择一个已打开终端
-    map("n", "<leader>ts", "<cmd>TermSelect<cr>", tbl(opts, { desc = "选择一个已打开终端" }))
-
-    -- 创建自定义 lazygit 终端
-    local Terminal = require('toggleterm.terminal').Terminal
-    local lazygit = Terminal:new({
-        cmd = "lazygit",
-        direction = "float",  -- 浮动窗口布局
-        hidden = true
-    })
-
-    -- 定义切换 lazygit 终端的函数
-    function _lazygit_toggle()
-        lazygit:toggle()
-    end
-
-    -- 设置切换 lazygit 终端的快捷键
-    map("n", "<leader>tg", "<cmd>lua _lazygit_toggle()<cr>", tbl(opts, { desc = "切换 lazygit 终端" }))
-end
+--pluginsKeys.mapTerm = function()
+--    -- 切换普通终端
+--    map("n", "<leader>tt", "<cmd>ToggleTerm<cr>", tbl(opts, { desc = "切换终端" }))
+--    -- 切换水平分割终端
+--    map("n", "<leader>th", "<cmd>ToggleTerm direction=horizontal<cr>", tbl(opts, { desc = "切换水平分割终端" }))
+--    -- 切换垂直分割终端
+--    map("n", "<leader>tv", "<cmd>ToggleTerm direction=vertical<cr>", tbl(opts, { desc = "切换垂直分割终端" }))
+--    -- 切换浮动终端
+--    map("n", "<leader>tf", "<cmd>ToggleTerm direction=float<cr>", tbl(opts, { desc = "切换浮动终端" }))
+--    -- 切换所有终端
+--    map("n", "<leader>ta", "<cmd>ToggleTermToggleAll<cr>", tbl(opts, { desc = "切换所有终端" }))
+--    -- 选择一个已打开终端
+--    map("n", "<leader>ts", "<cmd>TermSelect<cr>", tbl(opts, { desc = "选择一个已打开终端" }))
+--
+--    -- 创建自定义 lazygit 终端
+--    local Terminal = require('toggleterm.terminal').Terminal
+--    local lazygit = Terminal:new({
+--        cmd = "lazygit",
+--        direction = "float",  -- 浮动窗口布局
+--        hidden = true
+--    })
+--
+--    -- 定义切换 lazygit 终端的函数
+--    function _lazygit_toggle()
+--        lazygit:toggle()
+--    end
+--
+--    -- 设置切换 lazygit 终端的快捷键
+--    map("n", "<leader>tg", "<cmd>lua _lazygit_toggle()<cr>", tbl(opts, { desc = "切换 lazygit 终端" }))
+--end
 
 pluginsKeys.mapMiniBufremove = function()
     -- 普通删除（保留窗口布局）
@@ -339,6 +339,14 @@ pluginsKeys.mapSnacks = function()
     map("n", "<leader>spd", function() Snacks.picker.lsp_definitions({auto_confirm = false,}) end, tbl(opts,{ desc = "显示并跳转lsp_definitions(esc:退出)" }))
     map("n", "<leader>spy", function() Snacks.picker.lsp_type_definitions({auto_confirm = false,}) end, tbl(opts,{ desc = "显示并跳转lsp_type_definitions(esc:退出)" }))
     map("n", "<leader>spD", function() Snacks.picker.lsp_declarations({auto_confirm = false,}) end, tbl(opts,{ desc = "显示并跳转lsp_declarations(esc:退出)" }))
+
+    -- terminal
+    map("n", "<leader>tt", function() Snacks.terminal() end, tbl(opts,{ desc = "切换默认终端(双击esc:退出终端输入模式)" }))
+    --map("n", "<leader>tt", function() Snacks.terminal.toggle() end, tbl(opts,{ desc = "切换默认终端(双击esc:退出终端输入模式)" }))
+    map("n", "<leader>to", function() Snacks.terminal.open() end, tbl(opts, { desc = "打开一个新终端" }))
+    map("n", "<leader>tf", function() local vim_shell=vim.o.shell Snacks.terminal.toggle(vim_shell,{}) end, tbl(opts, { desc = "切换浮动终端" }))
+    map("n", "<leader>tF", function() local vim_shell=vim.o.shell Snacks.terminal.get(vim_shell,{}) end, tbl(opts, { desc = "打开浮动终端" }))
+    map("t", "<A-Esc>", "<C-\\><C-n><C-w>c", tbl(opts,{ desc = "关闭当前term窗口" }))
 
 end
 

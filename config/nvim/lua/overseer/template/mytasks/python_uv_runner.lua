@@ -25,7 +25,8 @@ return {
             },
             -- 确保任务以非阻塞方式启动
             strategy = {
-                "terminal", -- 或 "jobstart"
+                --"terminal", -- 或 "jobstart"
+                "jobstart", -- 或 "jobstart"
             },
         }
     end,

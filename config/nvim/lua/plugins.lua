@@ -228,6 +228,7 @@ return {
             scroll = { enabled = false },
             statuscolumn = { enabled = false },
             words = { enabled = false },
+            terminal = {},
         },
         init = function ()
             require("config.keybindings").mapSnacks()
