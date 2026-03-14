@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# fcitx5输入法
+# -d参数启动，fcitx5以守护进程启动，且不关联tty，dwm退出后会一起退出
+#fcitx5 -d
+# &后台启动，fcitx5关联到tty，dwm退出后会一起退出
+#fcitx5 &
+# 需安装picom应用，窗口透明效果
+picom -b
+# dwm状态栏
+slstatus &
+# 需安装feh应用，从用户家目录.wallpaper随机读取图片设置桌面背景
+feh --bg-fill --randomize ~/.wallpaper/{*.jpg,*.png} &
+# 需安装Stretchly应用，休息提醒软件
+Stretchly &

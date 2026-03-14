@@ -82,27 +82,55 @@ return {
 		opts = {
 			columns = {
 				"icon",
-				-- "type",
+				--"type",
 				-- "permissions",
-				-- "size",
-				{ "mtime", format = "%y-%m-%d %H:%M" },
+				"size",
+				{ "mtime", format = "%y/%m/%d %H:%M" },
 			},
 			win_options = {
-				signcolumn = "yes",
+				signcolumn = "yes:2",
 			},
+            view_options = {
+                show_hidden = true,
+            },
 		},
 		config = function(_, opts)
 			local oil = require("oil")
 			oil.setup(opts)
 		end,
 	},
+    {
+        --oil第三方插件，在文件名旁展示git标记
+        "benomahony/oil-git.nvim",
+        dependencies = { "stevearc/oil.nvim" },
+        -- No opts or config needed! Works automatically
+    },
+    --[[{
+        --oil第三方插件，在signcolumn展示git标记
+        "refractalize/oil-git-status.nvim",
+        dependencies = {
+            "stevearc/oil.nvim",
+        },
+        config = true,
+    },]]
+    {
+        --oil第三方插件，在文件名旁显示lsp诊断标记
+        "JezerM/oil-lsp-diagnostics.nvim",
+        dependencies = { "stevearc/oil.nvim" },
+        opts = {}
+    },
 	{
 		"nvim-lualine/lualine.nvim",
 		dependencies = {
 			"nvim-tree/nvim-web-devicons",
 		},
-		config = function()
-			require("lualine").setup({})
+        opts = {
+            sections = {
+                lualine_x = {'encoding', 'fileformat', 'filetype', 'lsp_status'},
+            },
+        },
+		config = function(_, opts)
+			require("lualine").setup(opts)
 		end,
 	},
     {
@@ -119,6 +147,14 @@ return {
                 right_mouse_command = function(n) Snacks.bufdelete(n) end,
                 numbers = function(opts)
                     return string.format('%s·%s', opts.raise(opts.id), opts.lower(opts.ordinal))
+                end,
+                diagnostics = "nvim_lsp",    -- 选项false | "nvim_lsp" | "coc"
+                custom_filter = function(buf_number)
+                    -- filter out filetypes you don't want to see
+                    -- 排除 Quickfix List缓冲区
+                    if vim.bo[buf_number].filetype ~= "qf" then
+                        return true
+                    end
                 end,
                 offsets = {
                     -- 左侧让出nvim-tree插件位置
@@ -184,7 +220,10 @@ return {
             lazygit = {
                 enabled = true
             },
-            picker = { enabled = true },
+            picker = { 
+                enabled = true,
+                ui_select = true,
+            },
             notifier = {
                 enabled = true,
                 timeout = 5000,
@@ -193,7 +232,8 @@ return {
             scope = { enabled = true },
             scroll = { enabled = false },
             statuscolumn = { enabled = false },
-            words = { enabled = false },
+            words = { enabled = true },
+            terminal = {},
         },
         init = function ()
             require("config.keybindings").mapSnacks()
