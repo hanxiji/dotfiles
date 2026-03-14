@@ -124,8 +124,13 @@ return {
 		dependencies = {
 			"nvim-tree/nvim-web-devicons",
 		},
-		config = function()
-			require("lualine").setup({})
+        opts = {
+            sections = {
+                lualine_x = {'encoding', 'fileformat', 'filetype', 'lsp_status'},
+            },
+        },
+		config = function(_, opts)
+			require("lualine").setup(opts)
 		end,
 	},
     {
@@ -227,7 +232,7 @@ return {
             scope = { enabled = true },
             scroll = { enabled = false },
             statuscolumn = { enabled = false },
-            words = { enabled = false },
+            words = { enabled = true },
             terminal = {},
         },
         init = function ()
