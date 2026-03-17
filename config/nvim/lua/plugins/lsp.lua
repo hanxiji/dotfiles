@@ -37,9 +37,35 @@ return {
                         }
                     }]]
                 },
-                --ruff = true,
+                -- ruff与basedpyright协同，ruff主做lint和format，basedpyright关闭lint主做类型检查
+                ruff = {
+                    init_options = {
+                        settings = {
+                            lint = { enable = true },
+                            format = { enable = false }, -- 关闭ruff格式化，交给conform插件接管
+                        },
+                    },
+                    before_init = function(_, config)
+                        config.capabilities.textDocument.completion = nil -- 关闭补全，交给basedpyright
+                    end,
+                },
+                basedpyright = {
+                    settings = {
+                        basedpyright = {
+                            analysis = {
+                                -- 关闭所有风格检查(lint)，交给ruff
+                                diagnosticSeverityOverrides = {
+                                    reportUnusedImport = "none",
+                                    reportUnusedVariable = "none",
+                                    reportDuplicateImport = "none",
+                                    reportUnusedFunction = "none",
+                                    reportUnusedClass = "none",
+                                },
+                            }
+                        }
+                    }
+                },
                 pyright = {},
-                basedpyright = {},
                 clangd = {},
                 tinymist = {
                     on_attach = function(client, bufnr)

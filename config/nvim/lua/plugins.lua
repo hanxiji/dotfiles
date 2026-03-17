@@ -223,6 +223,13 @@ return {
             picker = { 
                 enabled = true,
                 ui_select = true,
+                layout = {
+                    preset = "vertical",
+                    layout = {
+                        width = 0.8,
+                        height = 0.8,
+                    },
+                },
             },
             notifier = {
                 enabled = true,

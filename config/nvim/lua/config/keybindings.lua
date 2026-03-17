@@ -84,21 +84,21 @@ end, tbl(opts,{ desc = "关闭选中的buffer" }))]]
 -- which-key
 map("n","<leader>?",function() require("which-key").show({ global = false }) end,{ noremap = true,silent = true,desc = "Buffer Local Keymaps (which-key)" })
 
--- 搜索
+-- fzf_lua搜索
 --map("n", "<S-S>", ":FzfLua files<CR>", { noremap = true,silent = true,desc = "搜索文件" })
-map("n", "<leader>ff", ":FzfLua files<CR>", { noremap = true,silent = true,desc = "搜索文件" })
-map("n", "<leader>fgg", ":FzfLua grep<CR>", { noremap = true,silent = true,desc = "grep搜索" })
-map("n", "<leader>fgb", ":FzfLua grep_curbuf<CR>", { noremap = true,silent = true,desc = "grep搜索当前buffer" })
-map("n", "<leader>fgp", ":FzfLua grep_project<CR>", { noremap = true,silent = true,desc = "grep搜索当前project" })
-map("n", "<leader>fb", ":FzfLua buffers<CR>", { noremap = true,silent = true,desc = "搜索buffer" })
-map("n", "<leader>fl", ":FzfLua blines<CR>", { noremap = true,silent = true,desc = "搜索当前buffer lines" })
-map("n", "<leader>fL", ":FzfLua lines<CR>", { noremap = true,silent = true,desc = "搜索所有打开buffer lines" })
-map("n", "<leader>fC", ":FzfLua commands<CR>", { noremap = true,silent = true,desc = "搜索command" })
-map("n", "<leader>fc", ":FzfLua command_history<CR>", { noremap = true,silent = true,desc = "搜索command_history" })
-map("n", "<leader>fnh", ":FzfLua helptags<CR>", { noremap = true,silent = true,desc = "搜索nvim helptags" })
-map("n", "<leader>fnk", ":FzfLua keymaps<CR>", { noremap = true,silent = true,desc = "搜索nvim keymaps" })
-map("n", "<leader>fno", ":FzfLua nvim_options<CR>", { noremap = true,silent = true,desc = "搜索nvim options" })
-map("n", "<leader>fnc", ":FzfLua colorschemes<CR>", { noremap = true,silent = true,desc = "搜索colorschemes" })
+--map("n", "<leader>ff", ":FzfLua files<CR>", { noremap = true,silent = true,desc = "搜索文件" })
+--map("n", "<leader>fgg", ":FzfLua grep<CR>", { noremap = true,silent = true,desc = "grep搜索" })
+--map("n", "<leader>fgb", ":FzfLua grep_curbuf<CR>", { noremap = true,silent = true,desc = "grep搜索当前buffer" })
+--map("n", "<leader>fgp", ":FzfLua grep_project<CR>", { noremap = true,silent = true,desc = "grep搜索当前project" })
+--map("n", "<leader>fb", ":FzfLua buffers<CR>", { noremap = true,silent = true,desc = "搜索buffer" })
+--map("n", "<leader>fl", ":FzfLua blines<CR>", { noremap = true,silent = true,desc = "搜索当前buffer lines" })
+--map("n", "<leader>fL", ":FzfLua lines<CR>", { noremap = true,silent = true,desc = "搜索所有打开buffer lines" })
+--map("n", "<leader>fC", ":FzfLua commands<CR>", { noremap = true,silent = true,desc = "搜索command" })
+--map("n", "<leader>fc", ":FzfLua command_history<CR>", { noremap = true,silent = true,desc = "搜索command_history" })
+--map("n", "<leader>fnh", ":FzfLua helptags<CR>", { noremap = true,silent = true,desc = "搜索nvim helptags" })
+--map("n", "<leader>fnk", ":FzfLua keymaps<CR>", { noremap = true,silent = true,desc = "搜索nvim keymaps" })
+--map("n", "<leader>fno", ":FzfLua nvim_options<CR>", { noremap = true,silent = true,desc = "搜索nvim options" })
+--map("n", "<leader>fnc", ":FzfLua colorschemes<CR>", { noremap = true,silent = true,desc = "搜索colorschemes" })
 map("n", "<leader>fr", ":GrugFar<CR>", tbl(opts, { desc = "查找文件内容替换(grug-far插件)" }))
 
 --map("n", "<leader>ps", ":FzfLua lsp_document_symbols<CR>", tbl(opts, { desc = "lsp搜索当前buffer lsp_document_symbols" }))
@@ -121,11 +121,29 @@ map("n", "<leader>fr", ":GrugFar<CR>", tbl(opts, { desc = "查找文件内容替
 --map("n", "<leader>pf", ":FzfLua lsp_finder<CR>", tbl(opts, { desc = "lsp整合搜索当前符号ref,def,impl等信息" }))
 
 -- formatter，使用conform.nvim自定义了一个Format方法
-map("n", "<leader>cf", ":Format<CR>", tbl(opts, { desc = "格式化整个文件" }))
-map("v", "<leader>cf", ":'<,'>Format<CR>", tbl(opts, { desc = "格式化选中片段" }))
---vim.keymap.set({ "n", "v" }, "<leader>f", function()
---  require("conform").format({ async = true })
---end, { desc = "Format current buffer" })
+--map("n", "<leader>cf", ":Format<CR>", tbl(opts, { desc = "格式化整个文件" }))
+--map("v", "<leader>cf", ":'<,'>Format<CR>", tbl(opts, { desc = "格式化选中片段" }))
+map({"n","v"}, "<leader>cf", function()
+    local conform = require("conform")
+    -- 视觉模式下，获取选中范围
+    local range = nil
+    if vim.fn.mode():match("[vV]") then
+        local start = vim.fn.getpos("v")
+        local end_ = vim.fn.getpos(".")
+        range = {
+            start = { start[2], start[3] - 1 },
+            ["end"] = { end_[2], end_[3] - 1 },
+        }
+        -- 退出visual模式
+        vim.api.nvim_input("<ESC>")
+    end
+
+    conform.format({
+        async = false,
+        lsp_fallback = false,
+        range = range, -- 👈 完全符合文档
+    })
+end, tbl(opts, { desc = "格式化代码" }))
 
 
 --[[
@@ -194,26 +212,46 @@ pluginsKeys.mapLsp = function(bufnr)
 
 
     -- 信息检索
-    map("n", "<leader>ls", ":FzfLua lsp_document_symbols<CR>", tbl(opts, { desc = "lsp 搜索当前buffer document symbols" }))
-    map("n", "<leader>lS", ":FzfLua lsp_workspace_symbols<CR>", tbl(opts, { desc = "lsp 搜索当前workspace workspace symbols" }))
-    map("n", "gd", "<cmd>FzfLua lsp_definitions<CR>", tbl(opts, { desc = "lsp 搜索当前符号 definitions" }))
-    map("n", "grr", "<cmd>FzfLua lsp_references<CR>", tbl(opts, { desc = "lsp 搜索 references" }))
-    map("n", "gI", "<cmd>FzfLua lsp_implementations<CR>", tbl(opts, { desc = "lsp 搜索 implementations" }))
-    map("n", "gy", "<cmd>FzfLua lsp_typedefs<CR>", tbl(opts, { desc = "lsp 搜索当前符号 type_definitions" }))
-    map("n", "gD", "<cmd>FzfLua lsp_declarations<CR>", tbl(opts, { desc = "lsp 搜索当前符号 declarations" }))
+    --map("n", "<leader>ls", ":FzfLua lsp_document_symbols<CR>", tbl(opts, { desc = "lsp 搜索当前buffer document symbols" }))
+    --map("n", "<leader>lS", ":FzfLua lsp_workspace_symbols<CR>", tbl(opts, { desc = "lsp 搜索当前workspace workspace symbols" }))
+    --map("n", "gd", "<cmd>FzfLua lsp_definitions<CR>", tbl(opts, { desc = "lsp 搜索当前符号 definitions" }))
+    --map("n", "grr", "<cmd>FzfLua lsp_references<CR>", tbl(opts, { desc = "lsp 搜索 references" }))
+    --map("n", "gI", "<cmd>FzfLua lsp_implementations<CR>", tbl(opts, { desc = "lsp 搜索 implementations" }))
+    --map("n", "gy", "<cmd>FzfLua lsp_typedefs<CR>", tbl(opts, { desc = "lsp 搜索当前符号 type_definitions" }))
+    --map("n", "gD", "<cmd>FzfLua lsp_declarations<CR>", tbl(opts, { desc = "lsp 搜索当前符号 declarations" }))
     map("n", "K", "<cmd>Lspsaga hover_doc<CR>", tbl(opts,{ desc = "lsp 搜索 enhanced hover doc" }))
     map("n", "gk", vim.lsp.buf.signature_help, tbl(opts,{ desc = "lsp 函数参数以及签名提示" }))
     map("i", "<c-k>", vim.lsp.buf.signature_help, tbl(opts,{ desc = "lsp 函数参数以及签名提示" }))
-    map("n", "gli", "<cmd>FzfLua lsp_incoming_calls<CR>", tbl(opts, { desc = "lsp 搜索 incoming calls(函数被调用)" }))
-    map("n", "glo", "<cmd>FzfLua lsp_outgoing_calls<CR>", tbl(opts, { desc = "lsp 搜索 outgoing calls(函数内调用其他函数列表)" }))
-    map("n", "glf", "<cmd>FzfLua lsp_finder<CR>", tbl(opts, { desc = "lsp 整合搜索当前符号ref,def,impl等信息" }))
+    --map("n", "gli", "<cmd>FzfLua lsp_incoming_calls<CR>", tbl(opts, { desc = "lsp 搜索 incoming calls(函数被调用)" }))
+    --map("n", "glo", "<cmd>FzfLua lsp_outgoing_calls<CR>", tbl(opts, { desc = "lsp 搜索 outgoing calls(函数内调用其他函数列表)" }))
+    --map("n", "glf", "<cmd>FzfLua lsp_finder<CR>", tbl(opts, { desc = "lsp 整合搜索当前符号ref,def,impl等信息" }))
+
+    map("n", "<leader>ls", function()
+        Snacks.picker.lsp_symbols({
+            filter={
+                default = { "Class","Constructor","Enum","Field","Function","Interface","Method","Module","Namespace","Package","Property","Struct","Trait","Variable","Object", }
+            },
+            markdown = true,
+            help = true,
+        })
+    end, tbl(opts,{ desc = "显示当前buffer lsp_symbols(esc:退出)" }))
+    map("n", "<leader>lS", function() Snacks.picker.lsp_workspace_symbols() end, tbl(opts,{ desc = "显示当前workspace lsp_symbols(esc:退出)" }))
+    map("n", "gd", function() Snacks.picker.lsp_definitions({auto_confirm = false,}) end, tbl(opts,{ desc = "显示并跳转lsp_definitions(esc:退出)" }))
+    map("n", "grr", function() Snacks.picker.lsp_references({auto_confirm = false,}) end, tbl(opts,{ silent = false, desc = "显示并跳转 lsp_references(esc:退出)" }))
+    map("n", "gI", function() Snacks.picker.lsp_implementations({auto_confirm = false,}) end, tbl(opts,{ silent = false, desc = "显示并跳转 lsp_implementations(esc:退出)" }))
+    map("n", "gy", function() Snacks.picker.lsp_type_definitions({auto_confirm = false,}) end, tbl(opts,{ desc = "显示并跳转lsp_type_definitions(esc:退出)" }))
+    map("n", "gD", function() Snacks.picker.lsp_declarations({auto_confirm = false,}) end, tbl(opts,{ desc = "显示并跳转lsp_declarations(esc:退出)" }))
+    map("n", "gli", function() Snacks.picker.lsp_incoming_calls({}) end, tbl(opts, { desc = "lsp 搜索 incoming calls(函数被调用)" }))
+    map("n", "glo", function() Snacks.picker.lsp_outgoing_calls({}) end, tbl(opts, { desc = "lsp 搜索 outgoing calls(函数内调用其他函数列表)" }))
 
     -- 诊断信息
     map("n", "<leader>la", "<cmd>Lspsaga code_action<CR>", tbl(opts,{ buffer = bufnr,desc = "打开code action" }))
     --map("n", "<leader>ld", "<cmd>FzfLua lsp_document_diagnostics<CR>", tbl(opts, { silent = false,desc = "lsp搜索当前buffer lsp_document_diagnostics" }))
     --map("n", "<leader>lD", "<cmd>FzfLua lsp_workspace_diagnostics<CR>", tbl(opts, { silent = false,desc = "lsp搜索当前workspace lsp_workspace_diagnostics" }))
-    map("n", "<leader>ld", "<cmd>FzfLua diagnostics_document<CR>", tbl(opts, { desc = "搜索当前buffer document diagnostics" }))
-    map("n", "<leader>lD", "<cmd>FzfLua diagnostics_workspace<CR>", tbl(opts, { desc = "搜索当前workspace document diagnostics" }))
+    --map("n", "<leader>ld", "<cmd>FzfLua diagnostics_document<CR>", tbl(opts, { desc = "搜索当前buffer document diagnostics" }))
+    --map("n", "<leader>lD", "<cmd>FzfLua diagnostics_workspace<CR>", tbl(opts, { desc = "搜索当前workspace document diagnostics" }))
+    map("n", "<leader>ld", function() Snacks.picker.diagnostics_buffer() end, tbl(opts,{ silent = false, desc = "显示当前buffer diagnostics(esc:退出)" }))
+    map("n", "<leader>lD", function() Snacks.picker.diagnostics() end, tbl(opts,{ silent = false, desc = "显示当前workspace diagnostics(esc:退出)" }))
     map("n", "<leader>ll", "<cmd>Lspsaga show_line_diagnostics<CR>", tbl(opts,{ desc = "展示当前行diagnostics" }))
     map("n", "<leader>lL", "<cmd>Lspsaga show_cursor_diagnostics<CR>", tbl(opts,{ desc = "展示光标所在位置diagnostics" }))
 
@@ -230,6 +268,7 @@ pluginsKeys.mapLsp = function(bufnr)
     -- 其他
     map("n", "<leader>lc", vim.lsp.codelens.run, tbl(opts,{ desc = "Run Codelens" }))
     map("n", "<leader>lC", vim.lsp.codelens.refresh, tbl(opts,{ desc = "Refresh & Display Codelens" }))
+    map("n", "<leader>le", "<cmd>LspRestart<CR>", tbl(opts,{ desc = "重启lsp服务(lsp发生异常或者安装依赖后需要重启)" }))
 end
 
 --pluginsKeys.cmp = function(cmp)
@@ -331,39 +370,37 @@ pluginsKeys.mapOverseer = function()
 end
 
 pluginsKeys.mapSnacks = function()
+    map("n", "<leader>s\"", function() Snacks.picker.registers() end, tbl(opts,{ desc = "搜索registers" }))
+    map("n", "<leader>s/", function() Snacks.picker.search_history() end, tbl(opts,{ desc = "搜索search history" }))
+    map("n", "<leader>sa", function() Snacks.picker.autocmds() end, tbl(opts,{ desc = "搜索nvim autocmds" }))
+    map("n", "<leader>sc", function() Snacks.picker.command_history() end, tbl(opts,{ desc = "搜索nvim command_history" }))
+    map("n", "<leader>sC", function() Snacks.picker.commands() end, tbl(opts,{ desc = "搜索nvim commands" }))
+    map("n", "<leader>sh", function() Snacks.picker.help() end, tbl(opts,{ desc = "搜索nvim help文档" }))
+    map("n", "<leader>sj", function() Snacks.picker.jumps() end, tbl(opts,{ desc = "搜索jumps" }))
+    map("n", "<leader>sk", function() Snacks.picker.keymaps() end, tbl(opts,{ desc = "搜索nvim keymaps" }))
+    map("n", "<leader>sl", function() Snacks.picker.loclist() end, tbl(opts,{ desc = "搜索location list" }))
     map("n", "<leader>sn", function() Snacks.notifier.show_history() end, tbl(opts,{ desc = "显示notifier历史(q:退出)" }))
     map("n", "<leader>sN", function() Snacks.picker.notifications() end, tbl(opts,{ desc = "显示并搜索notifier历史(esc:退出)" }))
+    map("n", "<leader>sR", function() Snacks.picker.resume() end, tbl(opts,{ desc = "搜索resume" }))
+    map("n", "<leader>su", function() Snacks.picker.undo() end, tbl(opts,{ desc = "搜索undo history" }))
+    map("n", "<leader>ssc", function() Snacks.picker.colorschemes() end, tbl(opts,{ desc = "搜索nvim colorschemes" }))
+    map("n", "<leader>sq", function() Snacks.picker.qflist() end, tbl(opts,{ desc = "搜索quickfix list" }))
+
+    map("n", "<leader>sL", function() Snacks.picker.lsp_config() end, tbl(opts,{ desc = "搜索Lsp config Info" }))
+
     map("n", "<leader>sg", function() Snacks.lazygit() end, tbl(opts,{ desc = "显示一个lazygit float窗口" }))
-    map("n", "<leader>sh", function() Snacks.picker.help() end, tbl(opts,{ desc = "搜索nvim help文档" }))
-    map("n", "<leader>sk", function() Snacks.picker.keymaps() end, tbl(opts,{ desc = "搜索nvim keymaps" }))
-    map("n", "<leader>spc", function() Snacks.picker.colorschemes() end, tbl(opts,{ desc = "搜索nvim colorschemes" }))
-    map("n", "<leader>sC", function() Snacks.picker.command() end, tbl(opts,{ desc = "搜索nvim command" }))
-    map("n", "<leader>sc", function() Snacks.picker.command_history() end, tbl(opts,{ desc = "搜索nvim command_history" }))
-    map("n", "<leader>sl", function() Snacks.picker.lsp_config() end, tbl(opts,{ desc = "搜索Lsp config Info" }))
-
-    -- lsp
-    --map("n", "<leader>ss", function()
-    --    Snacks.picker.lsp_symbols({
-    --        filter={
-    --            default = { "Class","Constructor","Enum","Field","Function","Interface","Method","Module","Namespace","Package","Property","Struct","Trait","Variable","Object", }
-    --        },
-    --        markdown = true,
-    --        help = true,
-    --    })
-    --end, tbl(opts,{ desc = "显示当前buffer lsp_symbols(esc:退出)" }))
-
-    --map("n", "<leader>sS", function() Snacks.picker.lsp_workspace_symbols() end, tbl(opts,{ desc = "显示当前workspace lsp_symbols(esc:退出)" }))
-
-    --map("n", "<leader>sd", function() Snacks.picker.diagnostics_buffer() end, tbl(opts,{ silent = false, desc = "显示当前buffer diagnostics(esc:退出)" }))
-    --map("n", "<leader>sD", function() Snacks.picker.diagnostics() end, tbl(opts,{ silent = false, desc = "显示当前workspace diagnostics(esc:退出)" }))
-
-    --map("n", "<leader>sr", function() Snacks.picker.lsp_references({auto_confirm = false,}) end, tbl(opts,{ silent = false, desc = "显示并跳转 lsp_references(esc:退出)" }))
-    --map("n", "<leader>si", function() Snacks.picker.lsp_implementations({auto_confirm = false,}) end, tbl(opts,{ silent = false, desc = "显示并跳转 lsp_implementations(esc:退出)" }))
-
-    --map("n", "<leader>spd", function() Snacks.picker.lsp_definitions({auto_confirm = false,}) end, tbl(opts,{ desc = "显示并跳转lsp_definitions(esc:退出)" }))
-    --map("n", "<leader>spy", function() Snacks.picker.lsp_type_definitions({auto_confirm = false,}) end, tbl(opts,{ desc = "显示并跳转lsp_type_definitions(esc:退出)" }))
-    --map("n", "<leader>spD", function() Snacks.picker.lsp_declarations({auto_confirm = false,}) end, tbl(opts,{ desc = "显示并跳转lsp_declarations(esc:退出)" }))
-
+    -- find
+    map("n", "<leader>fb", function() Snacks.picker.buffers() end, tbl(opts,{ desc = "搜索buffers" }))
+    map("n", "<leader>fc", function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, tbl(opts,{ desc = "搜索config file" }))
+    map("n", "<leader>ff", function() Snacks.picker.files() end, tbl(opts,{ desc = "搜索files" }))
+    map("n", "<leader>fG", function() Snacks.picker.git_files() end, tbl(opts,{ desc = "搜索git files" }))
+    --map("n", "<leader>fp", function() Snacks.picker.projects() end, tbl(opts,{ desc = "搜索projects(需依赖fd命令)" }))
+    map("n", "<leader>fR", function() Snacks.picker.recent() end, tbl(opts,{ desc = "搜索recent" }))
+    -- grep
+    map("n", "<leader>fgb", function() Snacks.picker.lines() end, tbl(opts,{ desc = "grep搜索buffer lines" }))
+    map("n", "<leader>fgB", function() Snacks.picker.grep_buffers() end, tbl(opts,{ desc = "grep搜索open buffers" }))
+    map("n", "<leader>fgg", function() Snacks.picker.grep() end, tbl(opts,{ desc = "grep搜索" }))
+    map({"n","v"}, "<leader>fgw", function() Snacks.picker.grep_word() end, tbl(opts,{ desc = "grep搜索visual selection or word" }))
     -- terminal
     map("n", "<leader>tt", function() Snacks.terminal() end, tbl(opts,{ desc = "切换默认终端(双击esc:退出终端输入模式)" }))
     --map("n", "<leader>tt", function() Snacks.terminal.toggle() end, tbl(opts,{ desc = "切换默认终端(双击esc:退出终端输入模式)" }))
