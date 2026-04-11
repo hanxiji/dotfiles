@@ -220,7 +220,7 @@ return {
             lazygit = {
                 enabled = true
             },
-            picker = { 
+            picker = {
                 enabled = true,
                 ui_select = true,
                 layout = {

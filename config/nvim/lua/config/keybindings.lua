@@ -241,8 +241,8 @@ pluginsKeys.mapLsp = function(bufnr)
     map("n", "gI", function() Snacks.picker.lsp_implementations({auto_confirm = false,}) end, tbl(opts,{ silent = false, desc = "显示并跳转 lsp_implementations(esc:退出)" }))
     map("n", "gy", function() Snacks.picker.lsp_type_definitions({auto_confirm = false,}) end, tbl(opts,{ desc = "显示并跳转lsp_type_definitions(esc:退出)" }))
     map("n", "gD", function() Snacks.picker.lsp_declarations({auto_confirm = false,}) end, tbl(opts,{ desc = "显示并跳转lsp_declarations(esc:退出)" }))
-    map("n", "gli", function() Snacks.picker.lsp_incoming_calls({}) end, tbl(opts, { desc = "lsp 搜索 incoming calls(函数被调用)" }))
-    map("n", "glo", function() Snacks.picker.lsp_outgoing_calls({}) end, tbl(opts, { desc = "lsp 搜索 outgoing calls(函数内调用其他函数列表)" }))
+    map("n", "<leader>li", function() Snacks.picker.lsp_incoming_calls({}) end, tbl(opts, { desc = "lsp 搜索 incoming calls(函数被调用)" }))
+    map("n", "<leader>lo", function() Snacks.picker.lsp_outgoing_calls({}) end, tbl(opts, { desc = "lsp 搜索 outgoing calls(函数内调用其他函数列表)" }))
 
     -- 诊断信息
     map("n", "<leader>la", "<cmd>Lspsaga code_action<CR>", tbl(opts,{ buffer = bufnr,desc = "打开code action" }))
@@ -397,8 +397,16 @@ pluginsKeys.mapSnacks = function()
     --map("n", "<leader>fp", function() Snacks.picker.projects() end, tbl(opts,{ desc = "搜索projects(需依赖fd命令)" }))
     map("n", "<leader>fR", function() Snacks.picker.recent() end, tbl(opts,{ desc = "搜索recent" }))
     -- grep
-    map("n", "<leader>fgb", function() Snacks.picker.lines() end, tbl(opts,{ desc = "grep搜索buffer lines" }))
-    map("n", "<leader>fgB", function() Snacks.picker.grep_buffers() end, tbl(opts,{ desc = "grep搜索open buffers" }))
+    map("n", "<leader>fl", function() Snacks.picker.lines() end, tbl(opts,{ desc = "模糊搜索当前buffer lines" }))
+    map("n", "<leader>fL", function() Snacks.picker.lines({
+        matcher = {
+            fuzzy = false,
+        }
+    }) end, tbl(opts,{ desc = "精确搜索当前buffer lines" }))
+    map("n", "<leader>fgb", function() Snacks.picker.grep_buffers() end, tbl(opts,{ desc = "grep搜索open buffers" }))
+    map("n", "<leader>fgB", function() Snacks.picker.grep({
+        dirs = { vim.api.nvim_buf_get_name(0) }
+    }) end, tbl(opts,{ desc = "grep搜索当前buffer" }))
     map("n", "<leader>fgg", function() Snacks.picker.grep() end, tbl(opts,{ desc = "grep搜索" }))
     map({"n","v"}, "<leader>fgw", function() Snacks.picker.grep_word() end, tbl(opts,{ desc = "grep搜索visual selection or word" }))
     -- terminal
