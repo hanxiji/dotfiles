@@ -260,6 +260,8 @@ pluginsKeys.mapLsp = function(bufnr)
     map("n", "gp", "<cmd>Lspsaga diagnostic_jump_prev<CR>", tbl(opts,{ desc = "跳转Prev diagnostic" }))
     map("n", "grn", function() Snacks.words.jump(vim.v.count1) end, tbl(opts,{ desc = "跳转Next Reference" }))
     map("n", "grp", function() Snacks.words.jump(-vim.v.count1) end, tbl(opts,{ desc = "跳转Prev Reference" }))
+    map("n", "gri", function() Snacks.picker.lsp_incoming_calls({}) end, tbl(opts, { desc = "lsp 搜索 incoming calls(函数被调用)" }))
+    map("n", "gro", function() Snacks.picker.lsp_outgoing_calls({}) end, tbl(opts, { desc = "lsp 搜索 outgoing calls(函数内调用其他函数列表)" }))
 
     -- 修改名称
     map("n", "<leader>lr", vim.lsp.buf.rename, tbl(opts,{ desc = "修改变量名" }))
@@ -267,8 +269,8 @@ pluginsKeys.mapLsp = function(bufnr)
 
     -- 其他
     map("n", "<leader>lc", vim.lsp.codelens.run, tbl(opts,{ desc = "Run Codelens" }))
-    map("n", "<leader>lC", vim.lsp.codelens.refresh, tbl(opts,{ desc = "Refresh & Display Codelens" }))
-    map("n", "<leader>le", "<cmd>LspRestart<CR>", tbl(opts,{ desc = "重启lsp服务(lsp发生异常或者安装依赖后需要重启)" }))
+    map("n", "<leader>lC", vim.lsp.codelens.enable, tbl(opts,{ desc = "Refresh & Display Codelens" }))
+    map("n", "<leader>le", "<cmd>lsp restart<CR>", tbl(opts,{ desc = "重启lsp服务(lsp发生异常或者安装依赖后需要重启)" }))
 end
 
 --pluginsKeys.cmp = function(cmp)

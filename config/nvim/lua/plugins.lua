@@ -225,10 +225,11 @@ return {
                 ui_select = true,
                 layout = {
                     preset = "vertical",
-                    layout = {
-                        width = 0.8,
-                        height = 0.8,
-                    },
+                    --当前版本设置宽高会造成部分插件报错，先注释掉
+                    --layout = {
+                    --    width = 0.8,
+                    --    height = 0.8,
+                    --},
                 },
             },
             notifier = {
